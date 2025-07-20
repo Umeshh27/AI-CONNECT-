@@ -32,9 +32,9 @@ function lerp(a, b, t) {
 }
 
 function animateGradient() {
-    currentColor.r = lerp(currentColor.r, targetColor.r, 0.01);
-    currentColor.g = lerp(currentColor.g, targetColor.g, 0.01);
-    currentColor.b = lerp(currentColor.b, targetColor.b, 0.01);
+    currentColor.r = lerp(currentColor.r, targetColor.r, 0.03);
+    currentColor.g = lerp(currentColor.g, targetColor.g, 0.03);
+    currentColor.b = lerp(currentColor.b, targetColor.b, 0.03);
 
     const newHex = rgbToHex({
         r: Math.round(currentColor.r),
