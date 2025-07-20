@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portal - The Future of Intelligence</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Smooth Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-circle">
+                    <div class="inner-circle"></div>
+                </div>
+            </div>
+            <div class="loading-text">AI Portal</div>
+            <div class="loading-progress">
+                <div class="progress-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cursor Follower -->
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="icon-inner"></div>
+                    </div>
+                    <span class="logo-text">AI Portal</span>
+                </div>
+                <nav class="nav">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#sectors" class="nav-link">Sectors</a>
+                    <a href="#tools" class="nav-link">Tools</a>
+                    <a href="#gems" class="nav-link">GEMS</a>
+                    <a href="#news" class="nav-link">News</a>
+                </nav>
+                <button class="cta-button">
+                    <span>Explore</span>
+                    <div class="button-bg"></div>
+                </button>
+                <button class="mobile-menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <div class="stars-layer"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-text">The Future is Here</span>
+                    <div class="badge-glow"></div>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-line">Artificial Intelligence</span>
+                    <span class="title-line highlight">Reimagined</span>
+                    <span class="title-line">for Tomorrow</span>
+                </h1>
+                <p class="hero-description">
+                    Discover the next generation of AI tools, insights, and innovations.
+                    Experience seamless integration across multiple sectors with our
+                    cutting-edge platform designed for the future.
+                </p>
+                <div class="hero-actions">
+                    <button class="primary-button" data-scroll-to="sectors">
+                        <span>Start Journey</span>
+                        <div class="button-shine"></div>
+                    </button>
+                    <button class="secondary-button" data-scroll-to="news">
+                        <span>Latest News</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <div class="scroll-text">Scroll to explore</div>
+        </div>
+    </section>
+
+    <!-- Hero Stats Section (moved below hero) -->
+    <section class="hero-stats-section">
+        <div class="container">
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="12">0</div>
+                    <div class="stat-label">AI Sectors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="500">0</div>
+                    <div class="stat-label">Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="1000">0</div>
+                    <div class="stat-label">Users</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- News Section -->
+    <section class="news" id="news">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <span>Latest Updates</span>
+                </div>
+                <h2 class="section-title">AI News & Insights</h2>
+                <p class="section-description">
+                    Stay updated with the latest developments in artificial intelligence,
+                    breakthrough research, and industry trends.
+                </p>
+            </div>
+            <div class="news-grid">
+                <article class="news-card featured">
+                    <div class="news-image">
+                        <div class="image-placeholder">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <div class="news-category">Breaking</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date">2 hours ago</span>
+                            <span class="news-read-time">5 min read</span>
+                        </div>
+                        <h3 class="news-title">OpenAI Announces GPT-5 with Revolutionary Capabilities</h3>
+                        <p class="news-excerpt">The latest iteration promises unprecedented reasoning abilities and
+                            multimodal understanding...</p>
+                        <div class="news-footer">
+                            <div class="news-author">
+                                <div class="author-avatar"></div>
+                                <span class="author-name">AI Research Team</span>
+                            </div>
+                            <button class="read-more-btn">
+                                <span>Read More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="news-card">
+                    <div class="news-image">
+                        <div class="image-placeholder">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="news-category">Technology</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date">1 day ago</span>
+                            <span class="news-read-time">3 min read</span>
+                        </div>
+                        <h3 class="news-title">Google's New AI Chip Delivers 10x Performance</h3>
+                        <p class="news-excerpt">The TPU v5 promises to accelerate machine learning workloads
+                            significantly...</p>
+                        <div class="news-footer">
+                            <div class="news-author">
+                                <div class="author-avatar"></div>
+                                <span class="author-name">Tech Insider</span>
+                            </div>
+                            <button class="read-more-btn">
+                                <span>Read More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="news-card">
+                    <div class="news-image">
+                        <div class="image-placeholder">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="news-category">Research</div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-date">3 days ago</span>
+                            <span class="news-read-time">7 min read</span>
+                        </div>
+                        <h3 class="news-title">Breakthrough in Neural Network Efficiency</h3>
+                        <p class="news-excerpt">Researchers develop new architecture that reduces training time by
+                            80%...</p>
+                        <div class="news-footer">
+                            <div class="news-author">
+                                <div class="author-avatar"></div>
+                                <span class="author-name">Research Lab</span>
+                            </div>
+                            <button class="read-more-btn">
+                                <span>Read More</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectors Section -->
+    <section class="sectors" id="sectors">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <span>Explore Sectors</span>
+                </div>
+                <h2 class="section-title">AI Across Industries</h2>
+                <p class="section-description">
+                    Discover how artificial intelligence is transforming every sector,
+                    from healthcare to finance, education to entertainment.
+                </p>
+            </div>
+            <div class="sectors-grid">
+                <div class="sector-card" data-sector="healthcare">
+                    <div class="card-bg"></div>
+                    <div class="card-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3 class="card-title">Healthcare</h3>
+                    <p class="card-description">Revolutionary AI diagnostics and personalized medicine</p>
+                    <div class="card-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="sector-card" data-sector="finance">
+                    <div class="card-bg"></div>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="card-title">Finance</h3>
+                    <p class="card-description">Smart trading algorithms and risk assessment</p>
+                    <div class="card-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="sector-card" data-sector="education">
+                    <div class="card-bg"></div>
+                    <div class="card-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="card-title">Education</h3>
+                    <p class="card-description">Adaptive learning and intelligent tutoring systems</p>
+                    <div class="card-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="sector-card" data-sector="automotive">
+                    <div class="card-bg"></div>
+                    <div class="card-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="card-title">Automotive</h3>
+                    <p class="card-description">Autonomous vehicles and smart transportation</p>
+                    <div class="card-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="sector-card" data-sector="entertainment">
+                    <div class="card-bg"></div>
+                    <div class="card-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="card-title">Entertainment</h3>
+                    <p class="card-description">AI-generated content and immersive experiences</p>
+                    <div class="card-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="sector-card" data-sector="manufacturing">
+                    <div class="card-bg"></div>
+                    <div class="card-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3 class="card-title">Manufacturing</h3>
+                    <p class="card-description">Smart factories and predictive maintenance</p>
+                    <div class="card-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="card-glow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools" id="tools">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <span>AI Tools</span>
+                </div>
+                <h2 class="section-title">Powerful AI Solutions</h2>
+                <p class="section-description">
+                    Explore our curated collection of cutting-edge AI tools designed
+                    to enhance productivity and innovation across all industries.
+                </p>
+            </div>
+            <div class="tools-filter">
+                <button class="filter-btn active" data-filter="all">All Tools</button>
+                <button class="filter-btn" data-filter="productivity">Productivity</button>
+                <button class="filter-btn" data-filter="creative">Creative</button>
+                <button class="filter-btn" data-filter="development">Development</button>
+                <button class="filter-btn" data-filter="analysis">Analysis</button>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card" data-category="productivity">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="tool-badge">Popular</div>
+                    </div>
+                    <h3 class="tool-title">ChatGPT</h3>
+                    <p class="tool-description">Advanced conversational AI for writing, coding, and problem-solving</p>
+                    <div class="tool-features">
+                        <span class="feature-tag">Text Generation</span>
+                        <span class="feature-tag">Code Assistance</span>
+                        <span class="feature-tag">Research</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">4.8</span>
+                        </div>
+                        <button class="tool-button">
+                            <span>Try Now</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="tool-card" data-category="creative">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <div class="tool-badge">New</div>
+                    </div>
+                    <h3 class="tool-title">Midjourney</h3>
+                    <p class="tool-description">AI art generator for creating stunning visual content and illustrations
+                    </p>
+                    <div class="tool-features">
+                        <span class="feature-tag">Image Generation</span>
+                        <span class="feature-tag">Art Creation</span>
+                        <span class="feature-tag">Style Transfer</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">4.9</span>
+                        </div>
+                        <button class="tool-button">
+                            <span>Try Now</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="tool-card" data-category="development">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="tool-badge">Pro</div>
+                    </div>
+                    <h3 class="tool-title">GitHub Copilot</h3>
+                    <p class="tool-description">AI-powered code completion and programming assistant</p>
+                    <div class="tool-features">
+                        <span class="feature-tag">Code Completion</span>
+                        <span class="feature-tag">Bug Detection</span>
+                        <span class="feature-tag">Documentation</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">4.7</span>
+                        </div>
+                        <button class="tool-button">
+                            <span>Try Now</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="tool-card" data-category="analysis">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="tool-badge">Featured</div>
+                    </div>
+                    <h3 class="tool-title">DataRobot</h3>
+                    <p class="tool-description">Automated machine learning platform for data analysis and predictions
+                    </p>
+                    <div class="tool-features">
+                        <span class="feature-tag">AutoML</span>
+                        <span class="feature-tag">Predictions</span>
+                        <span class="feature-tag">Analytics</span>
+                    </div>
+                    <div class="tool-footer">
+                        <div class="tool-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-text">4.6</span>
+                        </div>
+                        <button class="tool-button">
+                            <span>Try Now</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GEMS Section -->
+    <section class="gems" id="gems">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <span>Gemini GEMS</span>
+                </div>
+                <h2 class="section-title">Custom AI Models</h2>
+                <p class="section-description">
+                    Specialized AI assistants designed for specific tasks and workflows.
+                    Experience the power of tailored artificial intelligence.
+                </p>
+            </div>
+            <div class="gems-grid">
+                <div class="gem-card">
+                    <div class="gem-header">
+                        <div class="gem-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="gem-badge">AI Tutor</div>
+                    </div>
+                    <h3 class="gem-title">Learning Assistant</h3>
+                    <p class="gem-description">Socratic questioning AI that guides you through problems without giving
+                        direct answers</p>
+                    <div class="gem-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Critical Thinking</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Problem Solving</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Guided Learning</span>
+                        </div>
+                    </div>
+                    <div class="gem-actions">
+                        <button class="gem-demo-btn">
+                            <span>Try Demo</span>
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="gem-prompt-btn">
+                            <span>Get Prompt</span>
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="gem-card">
+                    <div class="gem-header">
+                        <div class="gem-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="gem-badge">Career</div>
+                    </div>
+                    <h3 class="gem-title">Resume Builder</h3>
+                    <p class="gem-description">AI-powered feedback using STAR method to optimize your resume for success
+                    </p>
+                    <div class="gem-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>STAR Method</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>ATS Optimization</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Industry Insights</span>
+                        </div>
+                    </div>
+                    <div class="gem-actions">
+                        <button class="gem-demo-btn">
+                            <span>Try Demo</span>
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="gem-prompt-btn">
+                            <span>Get Prompt</span>
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="gem-card">
+                    <div class="gem-header">
+                        <div class="gem-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="gem-badge">Programming</div>
+                    </div>
+                    <h3 class="gem-title">DSA Guide</h3>
+                    <p class="gem-description">Interactive guidance on Data Structures and Algorithms with visual
+                        explanations</p>
+                    <div class="gem-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Visual Learning</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Interview Prep</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Practice Problems</span>
+                        </div>
+                    </div>
+                    <div class="gem-actions">
+                        <button class="gem-demo-btn">
+                            <span>Try Demo</span>
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="gem-prompt-btn">
+                            <span>Get Prompt</span>
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="gem-card">
+                    <div class="gem-header">
+                        <div class="gem-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="gem-badge">Productivity</div>
+                    </div>
+                    <h3 class="gem-title">AI Tools Master</h3>
+                    <p class="gem-description">Expert guidance on AI tools, frameworks, and workflow optimization
+                        strategies</p>
+                    <div class="gem-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Tool Selection</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Workflow Design</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Best Practices</span>
+                        </div>
+                    </div>
+                    <div class="gem-actions">
+                        <button class="gem-demo-btn">
+                            <span>Try Demo</span>
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="gem-prompt-btn">
+                            <span>Get Prompt</span>
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <div class="icon-inner"></div>
+                        </div>
+                        <span class="logo-text">AI Portal</span>
+                    </div>
+                    <p class="footer-description">
+                        Empowering the future through artificial intelligence.
+                        Discover, learn, and innovate with cutting-edge AI solutions.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4 class="footer-title">Platform</h4>
+                        <ul class="footer-list">
+                            <li><a href="#sectors">AI Sectors</a></li>
+                            <li><a href="#tools">Tools</a></li>
+                            <li><a href="#gems">GEMS</a></li>
+                            <li><a href="#news">News</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4 class="footer-title">Resources</h4>
+                        <ul class="footer-list">
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">API Reference</a></li>
+                            <li><a href="#">Tutorials</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4 class="footer-title">Company</h4>
+                        <ul class="footer-list">
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Privacy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2024 AI Portal. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span class="notification-text">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
