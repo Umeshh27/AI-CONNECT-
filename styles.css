@@ -503,7 +503,7 @@ body {
     radial-gradient(1px 1px at 1160px 20px, rgba(255, 255, 255, 0.6), transparent);
   background-repeat: repeat;
   background-size: 200px 100px;
-  animation: starsMove 120s linear infinite;
+  animation: starsPingPong 20s ease-in-out infinite alternate;
 }
 
 .stars-layer::after {
@@ -526,16 +526,15 @@ body {
     radial-gradient(2px 2px at 500px 550px, rgba(255, 255, 255, 0.6), transparent);
   background-repeat: repeat;
   background-size: 300px 150px;
-  animation: starsMove 80s linear infinite reverse;
+  animation: starsPingPong 30s ease-in-out infinite alternate;
 }
 
-@keyframes starsMove {
+@keyframes starsPingPong {
   0% {
-    transform: translate(0, 0);
+    background-position: 0 0;
   }
-
   100% {
-    transform: translate(-200px, -100px);
+    background-position: 80px 40px;
   }
 }
 
