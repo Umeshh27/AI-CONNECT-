@@ -70,8 +70,9 @@ document.addEventListener('DOMContentLoaded', function () {
     initializeCounters();
     initializeFilters();
     initializeMobileMenu();
+    initializeDynamicContent();
 
-    console.log('✨ AI Portal initialized with smooth animations');
+    console.log('✨ AI Portal initialized with smooth animations and dynamic content');
 });
 
 // Loading Screen
@@ -582,4 +583,316 @@ style.textContent = `
 document.head.appendChild(style);
 
 console.log('🎨 AI Portal loaded with Awwwards-style animations');
+
+// Dynamic Content Initialization
+async function initializeDynamicContent() {
+    console.log('🔄 Initializing dynamic content...');
+    
+    try {
+        // Load news content
+        await loadNewsContent();
+        
+        // Load tools content
+        await loadToolsContent();
+        
+        // Update last updated timestamp
+        updateLastUpdated();
+        
+        console.log('✅ Dynamic content loaded successfully');
+    } catch (error) {
+        console.error('❌ Error loading dynamic content:', error);
+    }
+}
+
+// Load and display news content
+async function loadNewsContent() {
+    const newsContainer = document.querySelector('.news-grid');
+    if (!newsContainer) return;
+
+    // Show loading state
+    showLoadingState(newsContainer);
+
+    try {
+        const newsData = await window.FreeNewsAPI.fetchAINews();
+        await updateNewsSection(newsData);
+    } catch (error) {
+        console.error('Error loading news:', error);
+        showErrorState(newsContainer, 'Failed to load news');
+    }
+}
+
+// Load and display tools content
+async function loadToolsContent() {
+    const toolsContainer = document.querySelector('.tools-grid');
+    if (!toolsContainer) return;
+
+    // Show loading state
+    showLoadingState(toolsContainer);
+
+    try {
+        const toolsData = await window.ToolsAPI.fetchTrendingTools();
+        await updateToolsSection(toolsData);
+    } catch (error) {
+        console.error('Error loading tools:', error);
+        showErrorState(toolsContainer, 'Failed to load tools');
+    }
+}
+
+// Update news section with fresh data
+async function updateNewsSection(newsData) {
+    const newsContainer = document.querySelector('.news-grid');
+    if (!newsContainer) return;
+
+    // Clear existing content
+    newsContainer.innerHTML = '';
+
+    // Create news cards
+    newsData.slice(0, 6).forEach((article, index) => {
+        const newsCard = createNewsCard(article, index);
+        newsContainer.appendChild(newsCard);
+    });
+
+    // Animate cards in
+    animateCardsIn(newsContainer.children);
+}
+
+// Update tools section with fresh data
+async function updateToolsSection(toolsData) {
+    const toolsContainer = document.querySelector('.tools-grid');
+    if (!toolsContainer) return;
+
+    // Clear existing content
+    toolsContainer.innerHTML = '';
+
+    // Create tool cards
+    toolsData.slice(0, 6).forEach((tool, index) => {
+        const toolCard = createToolCard(tool, index);
+        toolsContainer.appendChild(toolCard);
+    });
+
+    // Animate cards in
+    animateCardsIn(toolsContainer.children);
+}
+
+// Create news card element
+function createNewsCard(article, index) {
+    const card = document.createElement('div');
+    card.className = 'news-card';
+    card.style.animationDelay = `${index * 0.1}s`;
+
+    const imageUrl = article.urlToImage || 'https://via.placeholder.com/400x200?text=AI+News';
+    const publishedDate = formatDate(article.publishedAt);
+    const description = truncateText(article.description || '', 120);
+
+    card.innerHTML = `
+        <div class="news-image">
+            <img src="${imageUrl}" alt="${article.title}" onerror="this.src='https://via.placeholder.com/400x200?text=AI+News'">
+            <div class="news-badge">
+                <span class="badge-text">BREAKING</span>
+            </div>
+        </div>
+        <div class="news-content">
+            <div class="news-meta">
+                <span class="news-date">${publishedDate}</span>
+                <span class="news-source">${article.source.name}</span>
+            </div>
+            <h3 class="news-title">${article.title}</h3>
+            <p class="news-description">${description}</p>
+            <a href="${article.url}" target="_blank" class="news-link">
+                Read More
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    `;
+
+    // Add click handler
+    card.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'A') {
+            window.open(article.url, '_blank');
+        }
+    });
+
+    return card;
+}
+
+// Create tool card element
+function createToolCard(tool, index) {
+    const card = document.createElement('div');
+    card.className = 'tool-card';
+    card.style.animationDelay = `${index * 0.1}s`;
+
+    const badges = [];
+    if (tool.isPopular) badges.push('<span class="tool-badge popular">POPULAR</span>');
+    if (tool.isNew) badges.push('<span class="tool-badge new">NEW</span>');
+
+    const stars = '★'.repeat(Math.floor(tool.rating)) + '☆'.repeat(5 - Math.floor(tool.rating));
+
+    card.innerHTML = `
+        <div class="tool-header">
+            <div class="tool-icon">${tool.icon}</div>
+            <div class="tool-badges">${badges.join('')}</div>
+        </div>
+        <div class="tool-content">
+            <h3 class="tool-name">${tool.name}</h3>
+            <p class="tool-description">${tool.description}</p>
+            <div class="tool-meta">
+                <div class="tool-rating">
+                    <span class="stars">${stars}</span>
+                    <span class="rating-value">${tool.rating}</span>
+                </div>
+                <div class="tool-category">${tool.category}</div>
+            </div>
+            <div class="tool-tags">
+                ${tool.tags.map(tag => `<span class="tool-tag">${tag}</span>`).join('')}
+            </div>
+            <a href="${tool.url}" target="_blank" class="tool-link">
+                Try Now
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+    `;
+
+    // Add click handler
+    card.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'A' && !e.target.closest('a')) {
+            window.open(tool.url, '_blank');
+        }
+    });
+
+    return card;
+}
+
+// Show loading state
+function showLoadingState(container) {
+    container.innerHTML = `
+        <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading latest content...</p>
+        </div>
+    `;
+}
+
+// Show error state
+function showErrorState(container, message) {
+    container.innerHTML = `
+        <div class="error-state">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>${message}</p>
+            <button onclick="location.reload()" class="retry-button">Retry</button>
+        </div>
+    `;
+}
+
+// Animate cards in
+function animateCardsIn(cards) {
+    Array.from(cards).forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+}
+
+// Update last updated timestamp
+function updateLastUpdated() {
+    const timestamp = document.querySelector('.last-updated');
+    if (timestamp) {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        timestamp.textContent = `Last updated: ${timeString}`;
+    }
+}
+
+// Enhanced filter functionality for tools
+function initializeToolsFilter() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const toolsGrid = document.querySelector('.tools-grid');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            // Update active state
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            const category = button.textContent.trim();
+            
+            // Show loading
+            showLoadingState(toolsGrid);
+            
+            try {
+                let toolsData;
+                if (category === 'All Tools') {
+                    toolsData = await window.ToolsAPI.fetchTrendingTools();
+                } else {
+                    toolsData = await window.ToolsAPI.fetchToolsByCategory(category);
+                }
+                
+                await updateToolsSection(toolsData);
+            } catch (error) {
+                console.error('Error filtering tools:', error);
+                showErrorState(toolsGrid, 'Failed to load tools');
+            }
+        });
+    });
+}
+
+// Initialize tools filter when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initializeToolsFilter, 1000); // Wait for initial load
+});
+
+// Refresh functionality
+function addRefreshButton() {
+    const refreshButton = document.createElement('button');
+    refreshButton.className = 'refresh-button';
+    refreshButton.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Content';
+    refreshButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-weight: 500;
+        cursor: pointer;
+        z-index: 1000;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    `;
+
+    refreshButton.addEventListener('click', async () => {
+        refreshButton.style.transform = 'scale(0.95)';
+        refreshButton.querySelector('i').style.animation = 'spin 1s linear infinite';
+        
+        await initializeDynamicContent();
+        
+        setTimeout(() => {
+            refreshButton.style.transform = 'scale(1)';
+            refreshButton.querySelector('i').style.animation = 'none';
+        }, 1000);
+    });
+
+    document.body.appendChild(refreshButton);
+}
+
+// Add refresh button when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(addRefreshButton, 2000);
+});
+
+
+
+
 
