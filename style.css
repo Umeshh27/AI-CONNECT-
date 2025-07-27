@@ -905,19 +905,72 @@ section {
   gap: var(--space-2xl);
 }
 
-.gem-card {
-  background: var(--bg-primary);
-  /* Use primary background */
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-2xl);
-  transition: all var(--transition-normal);
+#gems-carousel-track {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  min-height: 340px;
+  transition: transform 0.5s cubic-bezier(.4, 0, .2, 1);
+  overflow: visible;
 }
 
-.gem-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--color-gray-300);
-  box-shadow: var(--shadow-xl);
+.gem-card {
+  background: var(--card-bg, #fff);
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  padding: 32px 24px;
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
+  transition: transform 0.5s cubic-bezier(.4, 0, .2, 1), box-shadow 0.3s, opacity 0.3s;
+  opacity: 0.7;
+  z-index: 1;
+  transform: scale(0.85);
+  /* Default scale for non-active cards */
+}
+
+.gem-card.active {
+  transform: scale(1.08);
+  /* Scale up the active (center) card */
+  opacity: 1;
+  z-index: 3;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+}
+
+.gem-card.left,
+.gem-card.right {
+  transform: scale(0.95);
+  /* Slightly larger than background cards */
+  opacity: 0.9;
+  z-index: 2;
+}
+
+.gem-card:not(.active):not(.left):not(.right) {
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.carousel-nav {
+  /* ...your existing nav styles... */
+}
+
+.view-more-btn {
+  margin: 18px auto 0 auto;
+  display: block;
+  padding: 12px 32px;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.view-more-btn:hover {
+  background: #4f46e5;
 }
 
 .gem-header {
@@ -1978,7 +2031,10 @@ section {
 }
 
 /* Remove old columns/flex styles for testimonials-columns and testimonials-column */
-.testimonials-columns, .testimonials-column, .hidden-md, .hidden-lg {
+.testimonials-columns,
+.testimonials-column,
+.hidden-md,
+.hidden-lg {
   display: none !important;
 }
 
@@ -1993,12 +2049,14 @@ body.dark .testimonial-card {
     gap: 16px;
     min-height: 400px;
   }
+
   .ai-tools-row {
     gap: 16px;
     min-width: 220px;
     max-width: 1fr;
     height: 400px;
   }
+
   .testimonial-card {
     min-width: 180px;
     max-width: 320px;
@@ -2011,12 +2069,14 @@ body.dark .testimonial-card {
     gap: 8px;
     min-height: 240px;
   }
+
   .ai-tools-row {
     gap: 8px;
     min-width: 120px;
     max-width: 1fr;
     height: 240px;
   }
+
   .testimonial-card {
     min-width: 100px;
     max-width: 180px;
@@ -2043,7 +2103,7 @@ body.dark .testimonial-card {
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   max-width: 320px;
   width: auto;
   margin: 0 auto;
@@ -2053,13 +2113,14 @@ body.dark .testimonial-card {
 .check-all-button:hover {
   background-color: var(--button-hover-bg-color, #4338ca);
   color: #fff;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 body.dark .check-all-button {
   background-color: var(--color-primary, #6366f1);
   color: #fff;
 }
+
 /* --- CUSTOMIZED GPTs SECTION --- */
 :root {
   --bg-dark: #1a1a1a;
@@ -2145,15 +2206,18 @@ body.dark {
   scroll-snap-align: start;
   position: relative;
   margin: 0;
-  transform-origin: bottom center;
+  transform-origin: center center;
   z-index: 1;
+  /* Ensure base cards are above the container */
   min-width: 320px;
 }
 
+/* Style for the GPT card on hover */
 .gpt-card:hover {
-  transform: rotate(0deg) scale(var(--hover-scale)) translateY(var(--hover-lift-y)) !important;
+  transform: rotate(0deg) scale(1.15) !important;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-  z-index: 102;
+  z-index: 10 !important;
+  /* Ensure hovered card is above all others */
 }
 
 .scroll-fade {
@@ -2342,6 +2406,7 @@ body.dark .right-fade {
   line-height: 1.25rem;
   letter-spacing: -0.02em;
 }
+
 /* Style for the check-all-container button */
 .check-all-container {
   display: flex;
