@@ -1532,7 +1532,6 @@ body.dark .check-all-button {
 }
 
 .carousel-wrapper {
-  overflow: hidden;
   border-radius: var(--radius-xl);
   position: relative;
 }
