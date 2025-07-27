@@ -1,10 +1,16 @@
-// AI Portal - Light Mode JavaScript with Starting Animation
+// AI Portal - Light Mode JavaScript with Starting Animation and Carousel
 // Global variables
 let isLoading = true;
 let scrollProgress = 0;
 let currentFilter = 'all';
 let newsIndex = 0;
 let newsInterval;
+
+// Carousel variables
+let currentSlide = 0;
+let carouselCards = [];
+let cardsPerView = 3;
+let totalSlides = 0;
 
 // News data (converted from React)
 const newsItems = [
@@ -65,13 +71,79 @@ const newsItems = [
   }
 ];
 
+// GPT Cards data
+const gpts = [
+  {
+    id: '001',
+    iconClass: 'icon-atom',
+    iconContent: '⚛️',
+    title: 'Advanced Content Generator',
+    category: 'Content Creation',
+    description: 'This GPT specializes in generating high-quality, SEO-optimized articles and blog posts on various topics.',
+    link: '#'
+  },
+  {
+    id: '002',
+    iconClass: 'icon-chart',
+    iconContent: '📈',
+    title: 'Market Trend Analyzer',
+    category: 'Business & Finance',
+    description: 'Leverage this GPT to analyze market data, identify trends, and provide actionable insights for your investments.',
+    link: '#'
+  },
+  {
+    id: '003',
+    iconClass: 'icon-flow',
+    iconContent: '📝',
+    title: 'Academic Essay Writer',
+    category: 'Education',
+    description: 'Assists students and researchers in structuring, drafting, and refining academic essays and papers with proper citations.',
+    link: '#'
+  },
+  {
+    id: '004',
+    iconClass: 'icon-code',
+    iconContent: '💻',
+    title: 'Python Code Debugger',
+    category: 'Development',
+    description: 'Upload your Python code, and this GPT will help you identify bugs, suggest fixes, and explain errors.',
+    link: '#'
+  },
+  {
+    id: '005',
+    iconClass: 'icon-write',
+    iconContent: '✍️',
+    title: 'Creative Storyteller',
+    category: 'Writing & Arts',
+    description: 'Unleash your imagination! This GPT helps you develop plotlines, characters, and dialogues for captivating stories.',
+    link: '#'
+  },
+  {
+    id: '006',
+    iconClass: 'icon-atom',
+    iconContent: '🤖',
+    title: 'AI Image Prompt Creator',
+    category: 'Generative AI',
+    description: 'Craft perfect prompts for DALL-E, Midjourney, and Stable Diffusion to get the images you envision.',
+    link: '#'
+  },
+  {
+    id: '007',
+    iconClass: 'icon-chart',
+    iconContent: '💬',
+    title: 'Customer Service Bot',
+    category: 'Support',
+    description: 'Simulates customer interactions to help train and test your support team on common queries.',
+    link: '#'
+  }
+];
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
   initializeModeToggle(); // Add this before other inits
   initializeStartingAnimation();
   initializeHeroGradientAnimation(); // Add this for hero animation
-  console.log('✨ AI Portal initialized with starting animation');
+  console.log('✨ AI Portal initialized with starting animation and carousel');
 });
 
 // Dark/Light Mode Toggle
@@ -178,9 +250,247 @@ function initializeMainWebsite() {
   initializeFilters();
   initializeMobileMenu();
   initializeNewsSection();
-  initializeConnectSectionAnimations(); // NEW: Initialize connect section animations here
+  initializeCarousel(); // Initialize carousel
   enhanceAccessibility(); // Call accessibility enhancements here
   console.log('🚀 Main website initialized');
+}
+
+// Carousel Functions
+function initializeCarousel() {
+  const carouselTrack = document.getElementById('carousel-track');
+  const carouselPrev = document.getElementById('carousel-prev');
+  const carouselNext = document.getElementById('carousel-next');
+  const carouselIndicators = document.getElementById('carousel-indicators');
+
+  if (!carouselTrack) return;
+
+  // Calculate cards per view based on screen size
+  function calculateCardsPerView() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 480) {
+      return 1;
+    } else if (screenWidth < 768) {
+      return 2;
+    } else {
+      return 3;
+    }
+  }
+
+  // Create GPT cards
+  function createGptCard(gpt) {
+    const card = document.createElement('div');
+    card.classList.add('gpt-card');
+
+    card.innerHTML = `
+      <div class="gpt-card-header">
+        <div class="gpt-icon ${gpt.iconClass}">${gpt.iconContent}</div>
+        <span class="gpt-id">#${gpt.id}</span>
+      </div>
+      <h3 class="gpt-title">${gpt.title}</h3>
+      <span class="gpt-category-tag">${gpt.category}</span>
+      <p class="gpt-description">${gpt.description}</p>
+      <a href="${gpt.link}" class="gpt-link" target="_blank" rel="noopener noreferrer">Access GPT &rarr;</a>
+    `;
+
+    return card;
+  }
+
+  // Initialize carousel
+  function setupCarousel() {
+    cardsPerView = calculateCardsPerView();
+    totalSlides = Math.max(0, gpts.length - cardsPerView);
+    
+    // Clear existing cards
+    carouselTrack.innerHTML = '';
+    carouselCards = [];
+
+    // Create and append cards
+    gpts.forEach(gpt => {
+      const card = createGptCard(gpt);
+      carouselTrack.appendChild(card);
+      carouselCards.push(card);
+    });
+
+    // Create indicators
+    createIndicators();
+    
+    // Update carousel position
+    updateCarousel();
+    
+    // Update navigation buttons
+    updateNavigationButtons();
+  }
+
+  // Create indicator dots
+  function createIndicators() {
+    if (!carouselIndicators) return;
+    
+    carouselIndicators.innerHTML = '';
+    
+    for (let i = 0; i <= totalSlides; i++) {
+      const indicator = document.createElement('div');
+      indicator.classList.add('carousel-indicator');
+      if (i === currentSlide) {
+        indicator.classList.add('active');
+      }
+      
+      indicator.addEventListener('click', () => {
+        currentSlide = i;
+        updateCarousel();
+        updateNavigationButtons();
+        updateIndicators();
+      });
+      
+      carouselIndicators.appendChild(indicator);
+    }
+  }
+
+  // Update carousel position
+  function updateCarousel() {
+    const cardWidth = carouselCards[0]?.offsetWidth || 320;
+    const gap = 20; // CSS gap value
+    const translateX = -(currentSlide * (cardWidth + gap));
+    
+    carouselTrack.style.transform = `translateX(${translateX}px)`;
+  }
+
+  // Update navigation buttons
+  function updateNavigationButtons() {
+    if (carouselPrev) {
+      carouselPrev.disabled = currentSlide === 0;
+    }
+    if (carouselNext) {
+      carouselNext.disabled = currentSlide >= totalSlides;
+    }
+  }
+
+  // Update indicators
+  function updateIndicators() {
+    if (!carouselIndicators) return;
+    
+    const indicators = carouselIndicators.querySelectorAll('.carousel-indicator');
+    indicators.forEach((indicator, index) => {
+      indicator.classList.toggle('active', index === currentSlide);
+    });
+  }
+
+  // Navigation event listeners
+  if (carouselPrev) {
+    carouselPrev.addEventListener('click', () => {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateCarousel();
+        updateNavigationButtons();
+        updateIndicators();
+      }
+    });
+  }
+
+  if (carouselNext) {
+    carouselNext.addEventListener('click', () => {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateCarousel();
+        updateNavigationButtons();
+        updateIndicators();
+      }
+    });
+  }
+
+  // Touch/swipe support
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+
+  carouselTrack.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+  });
+
+  carouselTrack.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+  });
+
+  carouselTrack.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    const diffX = startX - currentX;
+    const threshold = 50;
+    
+    if (Math.abs(diffX) > threshold) {
+      if (diffX > 0 && currentSlide < totalSlides) {
+        // Swipe left - next slide
+        currentSlide++;
+      } else if (diffX < 0 && currentSlide > 0) {
+        // Swipe right - previous slide
+        currentSlide--;
+      }
+      
+      updateCarousel();
+      updateNavigationButtons();
+      updateIndicators();
+    }
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && currentSlide > 0) {
+      currentSlide--;
+      updateCarousel();
+      updateNavigationButtons();
+      updateIndicators();
+    } else if (e.key === 'ArrowRight' && currentSlide < totalSlides) {
+      currentSlide++;
+      updateCarousel();
+      updateNavigationButtons();
+      updateIndicators();
+    }
+  });
+
+  // Auto-play (optional)
+  let autoPlayInterval;
+  
+  function startAutoPlay() {
+    autoPlayInterval = setInterval(() => {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+      } else {
+        currentSlide = 0;
+      }
+      updateCarousel();
+      updateNavigationButtons();
+      updateIndicators();
+    }, 2500); // Change slide every 5 seconds
+  }
+
+  function stopAutoPlay() {
+    if (autoPlayInterval) {
+      clearInterval(autoPlayInterval);
+    }
+  }
+
+  // Pause auto-play on hover
+  carouselTrack.addEventListener('mouseenter', stopAutoPlay);
+  carouselTrack.addEventListener('mouseleave', startAutoPlay);
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    const newCardsPerView = calculateCardsPerView();
+    if (newCardsPerView !== cardsPerView) {
+      currentSlide = 0; // Reset to first slide
+      setupCarousel();
+    } else {
+      updateCarousel();
+    }
+  });
+
+  // Initialize carousel
+  setupCarousel();
+  
+  // Start auto-play
+  startAutoPlay();
 }
 
 // Scroll Effects
@@ -270,21 +580,6 @@ function initializeAnimations() {
 
 // Interactive Elements
 function initializeInteractions() {
-  // Sector card interactions (commented out as no HTML provided)
-  /*
-  document.querySelectorAll('.sector-card').forEach(card => {
-    card.addEventListener('click', function () {
-      const sector = this.getAttribute('data-sector');
-      showNotification(`Exploring ${sector} sector...`);
-
-      this.style.transform = 'translateY(-8px) scale(0.98)';
-      setTimeout(() => {
-        this.style.transform = 'translateY(-8px) scale(1)';
-      }, 150);
-    });
-  });
-  */
-
   // GEM interactions
   document.querySelectorAll('.gem-demo-btn').forEach(button => {
     button.addEventListener('click', function () {
@@ -412,7 +707,6 @@ function initializeNewsSection() {
   // Start the animated news feed
   startNewsAnimationCycle();
 
-
   function startNewsAnimationCycle() {
     animationPhase = 'filling';
     newsContainer.innerHTML = ''; // Clear container for new cycle
@@ -454,7 +748,6 @@ function initializeNewsSection() {
     flipOutNewsCards(); // Start flip out animation for all cards
   }
 
-
   function flipOutNewsCards() {
     // Collect all current news cards
     const cardsToFlip = Array.from(newsContainer.children); // Get live elements
@@ -490,308 +783,47 @@ function initializeNewsSection() {
     });
   }
 
-  // Helper function to create news card element (remains mostly same, but internal styles moved)
+  // Helper function to create news card element
   function createNewsCard(newsItem) {
     const card = document.createElement('div');
     card.className = 'news-card';
     card.style.opacity = '0'; // Initial state for animation
     card.style.transform = 'translateY(30px)'; // Initial state for animation
 
-    // Set the icon class directly for Font Awesome
-    const iconHtml = `<i class="${newsItem.icon}"></i>`;
-
     card.innerHTML = `
       <div class="news-card-header">
-        <div class="news-icon" style="background-color: ${newsItem.color}">
-          ${iconHtml}
+        <div class="news-icon" style="background-color: ${newsItem.color};">
+          <i class="${newsItem.icon}"></i>
         </div>
         <div class="news-content">
           <div class="news-meta">
             <span class="news-category">${newsItem.category}</span>
-            <span>•</span>
-            <div class="news-time">
+            <span class="news-time">
               <i class="fas fa-clock"></i>
-              <span>${newsItem.time}</span>
-            </div>
+              ${newsItem.time}
+            </span>
           </div>
-          <h3 class="news-title">${newsItem.title}</h3>
+          <h4 class="news-title">${newsItem.title}</h4>
+          <p class="news-summary">${newsItem.summary}</p>
         </div>
       </div>
-
-      <p class="news-summary">${newsItem.summary}</p>
-
       <div class="news-footer">
         <div class="news-stats">
           <div class="news-stat">
             <i class="fas fa-eye"></i>
-            <span>${newsItem.views.toLocaleString()}</span>
+            <span>${newsItem.views}</span>
           </div>
           <div class="news-stat">
             <i class="fas fa-comment"></i>
             <span>${newsItem.comments}</span>
           </div>
         </div>
-        <button class="read-more-btn">
-          Read more
-        </button>
+        <button class="read-more-btn">Read More</button>
       </div>
     `;
 
-    // Add click handler
-    card.addEventListener('click', () => {
-      showNotification(`Opening article: ${newsItem.title.substring(0, 30)}...`);
-    });
-
     return card;
   }
-}
-
-// Notification System
-function showNotification(message) {
-  const notification = document.getElementById('notification');
-  const notificationText = notification.querySelector('.notification-text');
-
-  if (!notification || !notificationText) return; // Ensure elements exist
-
-  notificationText.textContent = message;
-  notification.classList.add('show');
-
-  setTimeout(() => {
-    notification.classList.remove('show');
-  }, 3000);
-}
-
-// Utility Functions (debounce and throttle remain)
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-
-function throttle(func, limit) {
-  let inThrottle;
-  return function () {
-    const args = arguments;
-    const context = this;
-    if (!inThrottle) {
-      func.apply(context, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
-    }
-  }
-}
-
-// Accessibility Enhancements (moved into initializeMainWebsite)
-function enhanceAccessibility() {
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-      document.body.classList.add('keyboard-navigation');
-    }
-  });
-
-  document.addEventListener('mousedown', () => {
-    document.body.classList.remove('keyboard-navigation');
-  });
-
-  // Focus management
-  document.querySelectorAll(
-    'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
-  ).forEach(element => {
-    element.addEventListener('focus', () => {
-      element.style.outline = '2px solid #6366f1';
-      element.style.outlineOffset = '2px';
-    });
-
-    element.addEventListener('blur', () => {
-      element.style.outline = 'none';
-    });
-  });
-}
-
-// NEW: Function to initialize Connect Section specific animations
-function initializeConnectSectionAnimations() {
-  const pointer = document.getElementById('pointer');
-  const javascriptLabel = document.getElementById('javascript');
-  const reactJsLabel = document.getElementById('react-js');
-  const typescriptLabel = document.getElementById('typescript');
-  const nextJsLabel = document.getElementById('next-js');
-  const particlesContainer = document.querySelector('.connect-section .particles-container');
-  const contentWrapper = document.querySelector('.connect-section .content-wrapper');
-
-  // Ensure all required elements exist before proceeding with animations
-  if (!pointer || !javascriptLabel || !reactJsLabel || !typescriptLabel || !nextJsLabel || !particlesContainer || !contentWrapper) {
-    console.warn("Connect section animation elements not found. Skipping initialization.");
-    return;
-  }
-
-  const labels = [
-    { element: javascriptLabel, targetLeft: 200, targetTop: 60, text: "Branding" }, // Initial position
-    { element: reactJsLabel, targetLeft: 50, targetTop: 102, text: "Graphic Design" },
-    { element: typescriptLabel, targetLeft: 224, targetTop: 170, text: "Web Application" },
-    { element: nextJsLabel, targetLeft: 88, targetTop: 198, text: "UI-UX" }
-  ];
-
-  let animationIndex = 0;
-  let sequenceTimeout; // To store timeout ID for control
-
-  // Set initial opacity for all labels
-  labels.forEach(label => {
-    label.element.style.opacity = '0.5';
-    label.element.style.transition = 'opacity 0.3s ease-in-out';
-  });
-
-  // Set initial pointer position and transition once
-  pointer.style.left = `${labels[0].targetLeft}px`;
-  pointer.style.top = `${labels[0].targetTop}px`;
-  pointer.style.transition = 'left 0.5s ease-in-out, top 0.5s ease-in-out';
-  pointer.querySelector('.pointer-text').textContent = labels[0].text;
-
-
-  function animateConnectSequence() {
-    // Clear previous timeout to prevent multiple loops
-    if (sequenceTimeout) clearTimeout(sequenceTimeout);
-
-    const currentLabelData = labels[animationIndex];
-    const prevLabelData = labels[(animationIndex - 1 + labels.length) % labels.length];
-
-    // Fade out previous label (if not the very first step)
-    if (animationIndex > 0 || prevLabelData.element !== labels[0].element) { // Avoid fading out first label on initial run
-      prevLabelData.element.style.opacity = '0.5';
-    }
-
-
-    // Highlight current label
-    currentLabelData.element.style.opacity = '1';
-    pointer.querySelector('.pointer-text').textContent = currentLabelData.text;
-
-
-    // Animate pointer to current label's position
-    pointer.style.left = `${currentLabelData.targetLeft}px`;
-    pointer.style.top = `${currentLabelData.targetTop}px`;
-
-    // Advance index for next iteration
-    animationIndex = (animationIndex + 1) % labels.length;
-
-    // Schedule next step
-    const transitionDuration = 500; // Pointer move duration
-    const highlightDuration = 1000; // How long label is highlighted
-    const totalStepDuration = transitionDuration + highlightDuration;
-
-    sequenceTimeout = setTimeout(animateConnectSequence, totalStepDuration);
-  }
-
-  // Start the animation loop
-  animateConnectSequence();
-
-
-  // --- Particle Effect ---
-  const particleStyle = document.createElement("style");
-  particleStyle.type = "text/css";
-  particleStyle.innerText = `
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            border-radius: 50%;
-            background-color: var(--particle-color, rgba(0,0,0,0.5));
-            animation: particle-move var(--particle-duration) linear infinite var(--particle-delay);
-        }
-        @keyframes particle-move {
-            from {
-                transform: translateY(0) scale(1);
-                opacity: var(--particle-opacity-start, 0.7); /* Default start opacity */
-            }
-            to {
-                transform: translateY(-120vh) scale(0.5);
-                opacity: var(--particle-opacity-end, 0); /* Default end opacity */
-            }
-        }
-    `;
-  document.head.appendChild(particleStyle);
-
-  // Set initial particle color variable based on mode
-  function setParticleColorByMode() {
-    particlesContainer.style.setProperty('--particle-color', 'rgba(255,255,255,0.5)');
-  }
-  setParticleColorByMode();
-  // Listen for mode changes
-  const observer = new MutationObserver(setParticleColorByMode);
-  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-
-  // Create particles
-  const quantity = 150;
-  for (let i = 0; i < quantity; i++) {
-    const particle = document.createElement('div');
-    particle.classList.add('particle');
-    // Randomize initial position
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.top = `${Math.random() * 100}%`;
-    // Randomize animation properties using CSS variables
-    particle.style.setProperty('--particle-duration', `${Math.random() * 8 + 6}s`);
-    particle.style.setProperty('--particle-delay', `${Math.random() * 6}s`);
-    particle.style.setProperty('--particle-opacity-start', `${Math.random() * 0.7 + 0.3}`);
-    particlesContainer.appendChild(particle);
-  }
-
-  // --- Yellow Hover Effect ---
-  // Inject dynamic CSS for the hover effect once
-  const hoverStyle = document.createElement("style");
-  hoverStyle.type = "text/css";
-  hoverStyle.innerText = `
-        .content-wrapper::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 0, 0.2); /* Yellow with some transparency */
-            opacity: 0;
-            transition: opacity 0.2s ease-in-out, transform 0.2s ease-out;
-            transform-origin: center center; /* Changed origin to center */
-            pointer-events: none; /* Allow mouse events to pass through */
-            border-radius: inherit; /* Inherit border-radius from parent */
-            transform: translate(var(--highlight-x, 0), var(--highlight-y, 0)) scale(0); /* Initial scale 0 */
-            width: 80px; /* Fixed size */
-            height: 80px; /* Fixed size */
-            border-radius: 50%; /* Circular highlight */
-        }
-        .content-wrapper.hovering::before {
-            opacity: 1;
-            transform: translate(var(--highlight-x), var(--highlight-y)) scale(1);
-        }
-    `;
-  document.head.appendChild(hoverStyle);
-
-  // Event listeners for mouse interaction
-  contentWrapper.addEventListener('mousemove', (e) => {
-    const rect = contentWrapper.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const size = 80; // Size of the yellow highlight
-    const offsetX = size / 2;
-    const offsetY = size / 2;
-
-    // Set CSS variables for position, centered on the cursor
-    contentWrapper.style.setProperty('--highlight-x', `${x - offsetX}px`);
-    contentWrapper.style.setProperty('--highlight-y', `${y - offsetY}px`);
-
-    // Add 'hovering' class if mouse is over contentWrapper
-    if (!contentWrapper.classList.contains('hovering')) {
-      contentWrapper.classList.add('hovering');
-    }
-  });
-
-  contentWrapper.addEventListener('mouseleave', () => {
-    contentWrapper.classList.remove('hovering');
-  });
 }
 
 // --- HERO SECTION ANIMATED GRADIENT ---
@@ -912,10 +944,6 @@ const aiToolsData = [
   }
 ];
 
-const firstColumnTools = aiToolsData.slice(0, 3);
-const secondColumnTools = aiToolsData.slice(3, 6);
-const thirdColumnTools = aiToolsData.slice(6, 9);
-
 function createAIToolCard(tool) {
     const card = document.createElement('div');
     card.className = 'testimonial-card';
@@ -1013,271 +1041,41 @@ function redirectToAllTools() {
     window.location.href = 'your-ai-tools-page.html';
 }
 
-// Add common CSS for ripple effect and keyboard navigation (already in your file)
-// Moved this block to the very end to ensure it runs after DOMContentLoaded
-// and appends to head. Renamed 'style' to 'globalStyles' to avoid conflict.
-const globalStyles = document.createElement('style');
-globalStyles.textContent = `
-  .ripple {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(99, 102, 241, 0.3);
-    animation: ripple-animation 0.6s linear;
-    pointer-events: none;
-    transform: translate(-50%, -50%); /* Center ripple origin */
+// Notification function
+function showNotification(message) {
+  const notification = document.getElementById('notification');
+  const notificationText = notification.querySelector('.notification-text');
+  
+  if (notification && notificationText) {
+    notificationText.textContent = message;
+    notification.classList.add('show');
+    
+    setTimeout(() => {
+      notification.classList.remove('show');
+    }, 3000);
   }
+}
 
-  @keyframes ripple-animation {
-    from {
-      transform: scale(0);
-      opacity: 0.6;
-    }
-    to {
-      transform: scale(4);
-      opacity: 0;
-    }
-  }
-
-  .keyboard-navigation *:focus {
-    outline: 2px solid #6366f1 !important;
-    outline-offset: 2px !important;
-  }
-
-  .news-card {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .news-time {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-`;
-document.head.appendChild(globalStyles);
+// Accessibility enhancements
+function enhanceAccessibility() {
+  // Add keyboard navigation support
+  document.body.classList.add('keyboard-navigation');
+  
+  // Focus management for carousel
+  const carouselCards = document.querySelectorAll('.gpt-card');
+  carouselCards.forEach((card, index) => {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `GPT card ${index + 1}`);
+  });
+}
 
 // Cleanup function for news interval
 window.addEventListener('beforeunload', () => {
   if (newsInterval) {
     clearInterval(newsInterval);
   }
-  // Also clear connect section timeout if it exists
-  const pointer = document.getElementById('pointer');
-  if (pointer && pointer.sequenceTimeout) {
-      clearTimeout(pointer.sequenceTimeout);
-  }
 });
 
-console.log('🎨 AI Portal loaded with light mode and starting animation');
+console.log('🎨 AI Portal loaded with light mode, starting animation, and carousel');
 
-
-// --- Gemini GEMS Animated Showcase ---
-const gemsData = [
-  {
-    image: "https://assets-global.website-files.com/621c8a6c3c8b6e4c1e6b2b3a/63e3b7e7e7e7e7e7e7e7e7e7_chatgpt-icon.png",
-    title: "Namer UI",
-    subtitle: "Next.js Project",
-    description: "A comprehensive collection of modern, attractive, and unique reusable TypeScript components crafted specifically for Next.js.",
-    link: "#"
-  },
-  {
-    image: "https://cdn.openai.com/dall-e-2/dall-e-2-logo.png",
-    title: "DSA Guide",
-    subtitle: "Programming Assistant",
-    description: "Interactive guidance on Data Structures and Algorithms with visual explanations and practice problems.",
-    link: "#"
-  },
-  {
-    image: "https://www.synthesia.io/favicon-32x32.png",
-    title: "Resume Builder",
-    subtitle: "Career AI",
-    description: "AI-powered feedback using STAR method to optimize your resume for success and ATS systems.",
-    link: "#"
-  },
-  {
-    image: "https://runwayml.com/favicon-32x32.png",
-    title: "AI Tools Master",
-    subtitle: "Productivity Suite",
-    description: "Expert guidance on AI tools, frameworks, and workflow optimization strategies for your business.",
-    link: "#"
-  }
-];
-let gemsIndex = 0;
-
-function renderGem(index, animate = true, direction = 1) {
-  const gem = gemsData[index];
-  const imageDiv = document.querySelector('.gems-image');
-  const infoDiv = document.querySelector('.gems-info');
-  if (!gem || !imageDiv || !infoDiv) return;
-
-  // Animate out
-  if (animate) {
-    imageDiv.classList.remove('gems-fade-in', 'gems-slide-in');
-    infoDiv.classList.remove('gems-fade-in', 'gems-slide-in');
-    imageDiv.classList.add('gems-fade-out');
-    infoDiv.classList.add('gems-fade-out');
-    setTimeout(() => {
-      updateGemContent(gem, imageDiv, infoDiv);
-      imageDiv.classList.remove('gems-fade-out');
-      infoDiv.classList.remove('gems-fade-out');
-      imageDiv.classList.add(direction > 0 ? 'gems-slide-in' : 'gems-fade-in');
-      infoDiv.classList.add(direction > 0 ? 'gems-slide-in' : 'gems-fade-in');
-    }, 400);
-  } else {
-    updateGemContent(gem, imageDiv, infoDiv);
-    imageDiv.classList.add('gems-fade-in');
-    infoDiv.classList.add('gems-fade-in');
-  }
-}
-
-function updateGemContent(gem, imageDiv, infoDiv) {
-  imageDiv.innerHTML = `<img src="${gem.image}" alt="${gem.title}" />`;
-  infoDiv.innerHTML = `
-    <h3 class="gems-title">${gem.title}</h3>
-    <div class="gems-subtitle">${gem.subtitle}</div>
-    <p class="gems-description">${gem.description}</p>
-    <div class="gems-actions">
-      <button class="gems-btn gems-prev">Previous</button>
-      <button class="gems-btn gems-next">Next</button>
-      <a href="${gem.link}" class="gems-btn gems-primary" target="_blank">Open Web App</a>
-    </div>
-  `;
-  // Wire up buttons
-  infoDiv.querySelector('.gems-prev').onclick = () => {
-    gemsIndex = (gemsIndex - 1 + gemsData.length) % gemsData.length;
-    renderGem(gemsIndex, true, -1);
-  };
-  infoDiv.querySelector('.gems-next').onclick = () => {
-    gemsIndex = (gemsIndex + 1) % gemsData.length;
-    renderGem(gemsIndex, true, 1);
-  };
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderGem(gemsIndex, false);
-});
-
-// --- CUSTOMIZED GPTs SECTION ---
-const gpts = [
-  {
-    id: '001',
-    iconClass: 'icon-atom',
-    iconContent: '⚛️',
-    title: 'Advanced Content Generator',
-    category: 'Content Creation',
-    description: 'This GPT specializes in generating high-quality, SEO-optimized articles and blog posts on various topics.',
-    link: '#'
-  },
-  {
-    id: '002',
-    iconClass: 'icon-chart',
-    iconContent: '📈',
-    title: 'Market Trend Analyzer',
-    category: 'Business & Finance',
-    description: 'Leverage this GPT to analyze market data, identify trends, and provide actionable insights for your investments.',
-    link: '#'
-  },
-  {
-    id: '003',
-    iconClass: 'icon-flow',
-    iconContent: '📝',
-    title: 'Academic Essay Writer',
-    category: 'Education',
-    description: 'Assists students and researchers in structuring, drafting, and refining academic essays and papers with proper citations.',
-    link: '#'
-  },
-  {
-    id: '004',
-    iconClass: 'icon-code',
-    iconContent: '💻',
-    title: 'Python Code Debugger',
-    category: 'Development',
-    description: 'Upload your Python code, and this GPT will help you identify bugs, suggest fixes, and explain errors.',
-    link: '#'
-  },
-  {
-    id: '005',
-    iconClass: 'icon-write',
-    iconContent: '✍️',
-    title: 'Creative Storyteller',
-    category: 'Writing & Arts',
-    description: 'Unleash your imagination! This GPT helps you develop plotlines, characters, and dialogues for captivating stories.',
-    link: '#'
-  },
-  {
-    id: '006',
-    iconClass: 'icon-atom',
-    iconContent: '🤖',
-    title: 'AI Image Prompt Creator',
-    category: 'Generative AI',
-    description: 'Craft perfect prompts for DALL-E, Midjourney, and Stable Diffusion to get the images you envision.',
-    link: '#'
-  },
-  {
-    id: '007',
-    iconClass: 'icon-chart',
-    iconContent: '💬',
-    title: 'Customer Service Bot',
-    category: 'Support',
-    description: 'Simulates customer interactions to help train and test your support team on common queries.',
-    link: '#'
-  }
-];
-
-function createGptCard(gpt) {
-  const card = document.createElement('div');
-  card.classList.add('gpt-card');
-
-  card.innerHTML = `
-        <div class="gpt-card-header">
-            <div class="gpt-icon ${gpt.iconClass}">${gpt.iconContent}</div>
-            <span class="gpt-id">#${gpt.id}</span>
-        </div>
-        <h3 class="gpt-title">${gpt.title}</h3>
-        <span class="gpt-category-tag">${gpt.category}</span>
-        <p class="gpt-description">${gpt.description}</p>
-        <a href="${gpt.link}" class="gpt-link" target="_blank" rel="noopener noreferrer">Access GPT &rarr;</a>
-    `;
-
-  return card;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const gptCardsContainer = document.querySelector('.gpt-cards-container');
-  if (!gptCardsContainer) return;
-
-  // Append each GPT card to the container and apply initial transforms
-  gpts.forEach((gpt, index) => {
-    const card = createGptCard(gpt);
-    gptCardsContainer.appendChild(card);
-
-    // Calculate initial rotation and translation for each card
-    const numCards = gpts.length;
-    const middleIndex = Math.floor(numCards / 2);
-    const cardBendDegree = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--card-bend-degree'));
-    const cardTranslateYBase = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--card-translate-y-base'));
-    const cardTranslateXBase = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--card-translate-x-base'));
-
-    let rotationDegree = 0;
-    let translateYValue = 0;
-    let translateXValue = 0;
-    let zIndex = 0;
-
-    // Make the middle card straight and the furthest cards more bent
-    const distanceFromMiddle = Math.abs(index - middleIndex);
-    const maxBend = cardBendDegree;
-    const maxTranslate = cardTranslateYBase * 3;
-
-    rotationDegree = (index - middleIndex) * (maxBend / middleIndex);
-    translateYValue = distanceFromMiddle * (maxTranslate / middleIndex);
-    translateXValue = (index - middleIndex) * (cardTranslateXBase * 1.5);
-
-    // Adjust Z-index so central cards are on top, fading outwards
-    zIndex = numCards - distanceFromMiddle;
-
-    // Apply initial transform and z-index
-    card.style.transform = `translateX(${translateXValue}px) translateY(${translateYValue}px) rotate(${rotationDegree}deg)`;
-    card.style.zIndex = zIndex;
-    card.dataset.initialTransform = `translateX(${translateXValue}px) translateY(${translateYValue}px) rotate(${rotationDegree}deg)`;
-    card.dataset.initialZIndex = zIndex;
-  });
-});
