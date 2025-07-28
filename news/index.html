@@ -1,80 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI News Portal - Powered by NewsData.io</title>
-    <!-- Inter font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Link to the news-specific CSS -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI News Portal - Powered by NewsData.io</title>
+  <!-- Inter font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Link to the news-specific CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <section class="news-data-section" id="news-data-section">
-      <div class="section-container">
-        <div class="section-header">
-          <div class="section-badge">
-            <i class="fas fa-globe"></i>
-            Global AI News
-          </div>
-          <h2 class="section-title">
-            Latest from
-            <span class="highlight">NewsData.io</span>
-          </h2>
-          <p class="section-description">
-            Explore real-time news across various AI-related sectors, powered by NewsData.io.
-          </p>
+  <section class="news-data-section" id="news-data-section">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-badge">
+          <i class="fas fa-globe"></i>
+          Global AI News
         </div>
+        <h2 class="section-title">
+          Latest from
+          <span class="highlight">NewsData.io</span>
+        </h2>
+        <p class="section-description">
+          Explore real-time news across various AI-related sectors, powered by NewsData.io.
+        </p>
+        <!-- Dark Mode Toggle Button -->
+        <button id="dark-mode-toggle" class="mode-toggle" aria-label="Toggle dark mode">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
 
-        <!-- News Filters and Search -->
-        <div class="news-controls">
-          <div class="news-categories">
-            <button class="category-btn active" data-category="all">All</button>
-            <button class="category-btn" data-category="technology">AI</button>
-            <button class="category-btn" data-category="software">Tools</button>
-            <button class="category-btn" data-category="business">Internships</button>
-            <button class="category-btn" data-category="science">Projects</button>
-          </div>
-          <div class="news-search">
-            <input type="text" id="news-data-search-input" placeholder="Search NewsData.io..." aria-label="Search NewsData.io">
-            <button id="news-data-search-btn"><i class="fas fa-search"></i></button>
-            <!-- NEW: Update Button -->
-            <button id="update-news-btn" class="update-btn">Update News</button>
-          </div>
+      <!-- News Filters and Search -->
+      <div class="news-controls">
+        <div class="news-categories">
+          <button class="category-btn active" data-category="all">All</button>
+          <button class="category-btn" data-category="technology">AI</button>
+          <button class="category-btn" data-category="software">Tools</button>
+          <button class="category-btn" data-category="business">Internships</button>
+          <button class="category-btn" data-category="science">Projects</button>
         </div>
-
-        <div class="news-data-content-grid">
-          <div class="news-data-feed-container">
-            <div class="news-data-feed-header">
-              <h4 class="feed-title">Dynamic News Feed</h4>
-              <div id="news-data-loading-indicator" class="loading-indicator" style="display: none;">
-                <div class="spinner"></div> Loading...
-              </div>
-              <div id="news-data-error-message" class="error-message" style="display: none;">
-                <i class="fas fa-exclamation-circle"></i> Failed to load news. Please try again later.
-              </div>
-            </div>
-            <div class="news-data-articles-grid" id="news-data-articles-grid">
-              <!-- News articles will be inserted here by JavaScript -->
-            </div>
-            <button id="load-more-news-data" class="load-more-btn" style="display: none;">Load More News</button>
-          </div>
+        <div class="news-search">
+          <input type="text" id="news-data-search-input" placeholder="Search NewsData.io..."
+            aria-label="Search NewsData.io">
+          <button id="news-data-search-btn"><i class="fas fa-search"></i></button>
+          <!-- NEW: Update Button -->
+          <button id="update-news-btn" class="update-btn">Update News</button>
         </div>
       </div>
-    </section>
 
-    <!-- Optional: Notification element if you want to reuse it -->
-    <div class="notification" id="notification" style="display: none;">
-      <div class="notification-content">
-        <i class="fas fa-check-circle"></i>
-        <span class="notification-text">Action completed successfully!</span>
+      <div class="news-data-content-grid">
+        <div class="news-data-feed-container">
+          <div class="news-data-feed-header">
+            <h4 class="feed-title">Dynamic News Feed</h4>
+            <div id="news-data-loading-indicator" class="loading-indicator" style="display: none;">
+              <div class="spinner"></div> Loading...
+            </div>
+            <div id="news-data-error-message" class="error-message" style="display: none;">
+              <i class="fas fa-exclamation-circle"></i> Failed to load news. Please try again later.
+            </div>
+          </div>
+          <div class="news-data-articles-grid" id="news-data-articles-grid">
+            <!-- News articles will be inserted here by JavaScript -->
+          </div>
+          <button id="load-more-news-data" class="load-more-btn" style="display: none;">Load More News</button>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Link to the news-specific JavaScript -->
-    <script src="script.js"></script>
+  <!-- Optional: Notification element if you want to reuse it -->
+  <div class="notification" id="notification" style="display: none;">
+    <div class="notification-content">
+      <i class="fas fa-check-circle"></i>
+      <span class="notification-text">Action completed successfully!</span>
+    </div>
+  </div>
+
+  <!-- Link to the news-specific JavaScript -->
+  <script src="script.js"></script>
 </body>
+
 </html>

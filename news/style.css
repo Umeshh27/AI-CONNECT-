@@ -160,7 +160,8 @@ body {
 /* NewsData.io Section Styles */
 .news-data-section {
   padding: var(--space-3xl) 0;
-  background-color: var(--bg-secondary); /* Distinct background */
+  background-color: var(--bg-secondary);
+  /* Distinct background */
 }
 
 .news-controls {
@@ -253,7 +254,8 @@ body.dark .category-btn.active {
 
 /* NEW: Update button style */
 .update-btn {
-  background: var(--color-accent); /* Use an accent color for distinction */
+  background: var(--color-accent);
+  /* Use an accent color for distinction */
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-full);
@@ -264,7 +266,8 @@ body.dark .category-btn.active {
 }
 
 .update-btn:hover {
-  background: #0ea5e9; /* A slightly darker cyan */
+  background: #0ea5e9;
+  /* A slightly darker cyan */
   transform: translateY(-2px);
   box-shadow: var(--shadow-sm);
 }
@@ -272,14 +275,16 @@ body.dark .category-btn.active {
 
 .news-data-content-grid {
   display: grid;
-  grid-template-columns: 1fr; /* Full width for the dynamic news feed */
+  grid-template-columns: 1fr;
+  /* Full width for the dynamic news feed */
   gap: var(--space-4xl);
   align-items: start;
 }
 
 .news-data-feed-container {
   position: relative;
-  background: linear-gradient(135deg, var(--color-gray-100), var(--bg-primary)); /* Lighter background for the feed itself */
+  background: linear-gradient(135deg, var(--color-gray-100), var(--bg-primary));
+  /* Lighter background for the feed itself */
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
   border: 1px solid var(--color-gray-200);
@@ -294,11 +299,15 @@ body.dark .category-btn.active {
 
 .news-data-articles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive grid for news cards */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  /* Responsive grid for news cards */
   gap: var(--space-lg);
-  max-height: 800px; /* Limit height for scrolling */
-  overflow-y: auto; /* Enable scrolling */
-  padding-right: var(--space-sm); /* Add padding for scrollbar */
+  max-height: 800px;
+  /* Limit height for scrolling */
+  overflow-y: auto;
+  /* Enable scrolling */
+  padding-right: var(--space-sm);
+  /* Add padding for scrollbar */
 }
 
 .news-data-articles-grid::-webkit-scrollbar {
@@ -504,6 +513,45 @@ body.dark .news-data-articles-grid::-webkit-scrollbar-thumb {
 
 .error-message {
   color: var(--color-error);
+}
+
+/* Mode Toggle Button */
+.mode-toggle {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: var(--bg-primary);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.mode-toggle .fa-sun {
+  display: none;
+}
+
+body.dark .mode-toggle .fa-moon {
+  display: none;
+}
+
+body.dark .mode-toggle .fa-sun {
+  display: inline;
+}
+
+body:not(.dark) .mode-toggle .fa-moon {
+  display: inline;
+}
+
+body:not(.dark) .mode-toggle .fa-sun {
+  display: none;
 }
 
 /* Responsive Design */

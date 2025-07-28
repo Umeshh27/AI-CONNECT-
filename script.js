@@ -144,6 +144,24 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeStartingAnimation();
   initializeHeroGradientAnimation(); // Add this for hero animation
   console.log('✨ AI Portal initialized with starting animation and carousel');
+
+  const mobileToggle = document.getElementById('mobile-menu');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  if (mobileToggle && mobileNav) {
+    mobileToggle.addEventListener('click', function () {
+      mobileNav.classList.toggle('active');
+      mobileToggle.classList.toggle('active');
+    });
+
+    // Optional: Hide menu when a link is clicked
+    mobileNav.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('active');
+        mobileToggle.classList.remove('active');
+      });
+    });
+  }
 });
 
 // Dark/Light Mode Toggle
@@ -299,7 +317,7 @@ function initializeCarousel() {
   function setupCarousel() {
     cardsPerView = calculateCardsPerView();
     totalSlides = Math.max(0, gpts.length - cardsPerView);
-    
+
     // Clear existing cards
     carouselTrack.innerHTML = '';
     carouselCards = [];
@@ -313,10 +331,10 @@ function initializeCarousel() {
 
     // Create indicators
     createIndicators();
-    
+
     // Update carousel position
     updateCarousel();
-    
+
     // Update navigation buttons
     updateNavigationButtons();
   }
@@ -324,23 +342,23 @@ function initializeCarousel() {
   // Create indicator dots
   function createIndicators() {
     if (!carouselIndicators) return;
-    
+
     carouselIndicators.innerHTML = '';
-    
+
     for (let i = 0; i <= totalSlides; i++) {
       const indicator = document.createElement('div');
       indicator.classList.add('carousel-indicator');
       if (i === currentSlide) {
         indicator.classList.add('active');
       }
-      
+
       indicator.addEventListener('click', () => {
         currentSlide = i;
         updateCarousel();
         updateNavigationButtons();
         updateIndicators();
       });
-      
+
       carouselIndicators.appendChild(indicator);
     }
   }
@@ -350,7 +368,7 @@ function initializeCarousel() {
     const cardWidth = carouselCards[0]?.offsetWidth || 320;
     const gap = 20; // CSS gap value
     const translateX = -(currentSlide * (cardWidth + gap));
-    
+
     carouselTrack.style.transform = `translateX(${translateX}px)`;
   }
 
@@ -367,7 +385,7 @@ function initializeCarousel() {
   // Update indicators
   function updateIndicators() {
     if (!carouselIndicators) return;
-    
+
     const indicators = carouselIndicators.querySelectorAll('.carousel-indicator');
     indicators.forEach((indicator, index) => {
       indicator.classList.toggle('active', index === currentSlide);
@@ -415,10 +433,10 @@ function initializeCarousel() {
   carouselTrack.addEventListener('touchend', () => {
     if (!isDragging) return;
     isDragging = false;
-    
+
     const diffX = startX - currentX;
     const threshold = 50;
-    
+
     if (Math.abs(diffX) > threshold) {
       if (diffX > 0 && currentSlide < totalSlides) {
         // Swipe left - next slide
@@ -427,7 +445,7 @@ function initializeCarousel() {
         // Swipe right - previous slide
         currentSlide--;
       }
-      
+
       updateCarousel();
       updateNavigationButtons();
       updateIndicators();
@@ -451,7 +469,7 @@ function initializeCarousel() {
 
   // Auto-play (optional)
   let autoPlayInterval;
-  
+
   function startAutoPlay() {
     autoPlayInterval = setInterval(() => {
       if (currentSlide < totalSlides) {
@@ -488,7 +506,7 @@ function initializeCarousel() {
 
   // Initialize carousel
   setupCarousel();
-  
+
   // Start auto-play
   startAutoPlay();
 }
@@ -889,167 +907,167 @@ function initializeHeroGradientAnimation() {
 // --- AI TOOLS (TESTIMONIALS) SECTION JS ---
 const aiToolsData = [
   {
-      text: "ChatGPT is an advanced conversational AI for generating human-like text, answering questions, and assisting with a wide range of tasks.",
-      image: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
-      name: "ChatGPT",
-      role: "Conversational AI"
+    text: "ChatGPT is an advanced conversational AI for generating human-like text, answering questions, and assisting with a wide range of tasks.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+    name: "ChatGPT",
+    role: "Conversational AI"
   },
   {
-      text: "Midjourney generates stunning, creative images and artwork from text prompts using advanced AI models.",
-      image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-      name: "Midjourney",
-      role: "AI Art Generator"
+    text: "Midjourney generates stunning, creative images and artwork from text prompts using advanced AI models.",
+    image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+    name: "Midjourney",
+    role: "AI Art Generator"
   },
   {
-      text: "GitHub Copilot helps you write code faster with AI-powered code suggestions and autocompletions inside your IDE.",
-      image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-      name: "GitHub Copilot",
-      role: "Code Assistant"
+    text: "GitHub Copilot helps you write code faster with AI-powered code suggestions and autocompletions inside your IDE.",
+    image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+    name: "GitHub Copilot",
+    role: "Code Assistant"
   },
   {
-      text: "Notion AI automates note-taking, summaries, and content generation within your Notion workspace.",
-      image: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
-      name: "Notion AI",
-      role: "Productivity"
+    text: "Notion AI automates note-taking, summaries, and content generation within your Notion workspace.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+    name: "Notion AI",
+    role: "Productivity"
   },
   {
-      text: "DALL·E 2 creates original images and artwork from natural language descriptions, powered by OpenAI.",
-      image: "https://cdn.openai.com/dall-e-2/dall-e-2-logo.png",
-      name: "DALL·E 2",
-      role: "Image Generation"
+    text: "DALL·E 2 creates original images and artwork from natural language descriptions, powered by OpenAI.",
+    image: "https://cdn.openai.com/dall-e-2/dall-e-2-logo.png",
+    name: "DALL·E 2",
+    role: "Image Generation"
   },
   {
-      text: "Synthesia enables you to create professional AI-generated videos from text in minutes, with avatars and voiceovers.",
-      image: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
-      name: "Synthesia",
-      role: "Video Generation"
+    text: "Synthesia enables you to create professional AI-generated videos from text in minutes, with avatars and voiceovers.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+    name: "Synthesia",
+    role: "Video Generation"
   },
   {
-      text: "Jasper is an AI writing assistant for marketing, blogs, and content creation, helping you write better and faster.",
-      image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-      name: "Jasper",
-      role: "AI Writing"
+    text: "Jasper is an AI writing assistant for marketing, blogs, and content creation, helping you write better and faster.",
+    image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+    name: "Jasper",
+    role: "AI Writing"
   },
   {
-      text: "Runway ML offers creative AI tools for video, image, and audio editing, including generative and enhancement features.",
-      image: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
-      name: "Runway ML",
-      role: "Creative Suite"
+    text: "Runway ML offers creative AI tools for video, image, and audio editing, including generative and enhancement features.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+    name: "Runway ML",
+    role: "Creative Suite"
   },
   {
-      text: "Perplexity AI is an advanced AI-powered search and research assistant that provides accurate, cited answers.",
-      image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-      name: "Perplexity AI",
-      role: "AI Search"
+    text: "Perplexity AI is an advanced AI-powered search and research assistant that provides accurate, cited answers.",
+    image: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+    name: "Perplexity AI",
+    role: "AI Search"
   }
 ];
 
 function createAIToolCard(tool) {
-    const card = document.createElement('div');
-    card.className = 'testimonial-card';
+  const card = document.createElement('div');
+  card.className = 'testimonial-card';
 
-    const text = document.createElement('div');
-    text.textContent = tool.text;
-    card.appendChild(text);
+  const text = document.createElement('div');
+  text.textContent = tool.text;
+  card.appendChild(text);
 
-    const author = document.createElement('div');
-    author.className = 'testimonial-author';
+  const author = document.createElement('div');
+  author.className = 'testimonial-author';
 
-    const img = document.createElement('img');
-    img.width = 40;
-    img.height = 40;
-    img.src = tool.image;
-    img.alt = tool.name;
-    author.appendChild(img);
+  const img = document.createElement('img');
+  img.width = 40;
+  img.height = 40;
+  img.src = tool.image;
+  img.alt = tool.name;
+  author.appendChild(img);
 
-    const details = document.createElement('div');
-    details.className = 'author-details';
+  const details = document.createElement('div');
+  details.className = 'author-details';
 
-    const name = document.createElement('div');
-    name.className = 'name';
-    name.textContent = tool.name;
-    details.appendChild(name);
+  const name = document.createElement('div');
+  name.className = 'name';
+  name.textContent = tool.name;
+  details.appendChild(name);
 
-    const role = document.createElement('div');
-    role.className = 'role';
-    role.textContent = tool.role;
-    details.appendChild(role);
+  const role = document.createElement('div');
+  role.className = 'role';
+  role.textContent = tool.role;
+  details.appendChild(role);
 
-    author.appendChild(details);
-    card.appendChild(author);
+  author.appendChild(details);
+  card.appendChild(author);
 
-    return card;
+  return card;
 }
 
 function setupVerticalCarousel(rowId, tools, speed) {
-    const row = document.getElementById(rowId);
-    if (!row) return;
-    row.innerHTML = '';
-    // Create a wrapper for seamless looping
-    const wrapper = document.createElement('div');
-    wrapper.style.display = 'flex';
-    wrapper.style.flexDirection = 'column';
-    wrapper.style.gap = getComputedStyle(row).gap || '32px';
-    wrapper.style.willChange = 'transform';
-    tools.forEach(tool => {
-        wrapper.appendChild(createAIToolCard(tool));
-    });
-    row.appendChild(wrapper);
-    let translateY = 0;
-    let lastTimestamp = 0;
-    let started = false;
-    function getFirstCardHeight() {
-        if (wrapper.children.length === 0) return 0;
-        const card = wrapper.children[0];
-        return card.offsetHeight + parseInt(getComputedStyle(row).gap || 32);
+  const row = document.getElementById(rowId);
+  if (!row) return;
+  row.innerHTML = '';
+  // Create a wrapper for seamless looping
+  const wrapper = document.createElement('div');
+  wrapper.style.display = 'flex';
+  wrapper.style.flexDirection = 'column';
+  wrapper.style.gap = getComputedStyle(row).gap || '32px';
+  wrapper.style.willChange = 'transform';
+  tools.forEach(tool => {
+    wrapper.appendChild(createAIToolCard(tool));
+  });
+  row.appendChild(wrapper);
+  let translateY = 0;
+  let lastTimestamp = 0;
+  let started = false;
+  function getFirstCardHeight() {
+    if (wrapper.children.length === 0) return 0;
+    const card = wrapper.children[0];
+    return card.offsetHeight + parseInt(getComputedStyle(row).gap || 32);
+  }
+  function startAnimation() {
+    // Start with the wrapper shifted up by the height of the first card
+    translateY = -getFirstCardHeight();
+    started = true;
+    requestAnimationFrame(animate);
+  }
+  function animate(ts) {
+    if (!lastTimestamp) lastTimestamp = ts;
+    const dt = (ts - lastTimestamp) / 1000;
+    lastTimestamp = ts;
+    translateY += speed * dt;
+    const firstCardHeight = getFirstCardHeight();
+    if (translateY >= 0) {
+      // Move first card to end and adjust translateY
+      wrapper.appendChild(wrapper.children[0]);
+      translateY -= firstCardHeight;
     }
-    function startAnimation() {
-        // Start with the wrapper shifted up by the height of the first card
-        translateY = -getFirstCardHeight();
-        started = true;
-        requestAnimationFrame(animate);
-    }
-    function animate(ts) {
-        if (!lastTimestamp) lastTimestamp = ts;
-        const dt = (ts - lastTimestamp) / 1000;
-        lastTimestamp = ts;
-        translateY += speed * dt;
-        const firstCardHeight = getFirstCardHeight();
-        if (translateY >= 0) {
-            // Move first card to end and adjust translateY
-            wrapper.appendChild(wrapper.children[0]);
-            translateY -= firstCardHeight;
-        }
-        wrapper.style.transform = `translateY(${translateY}px)`;
-        requestAnimationFrame(animate);
-    }
-    // Wait for layout, then start
-    setTimeout(startAnimation, 100);
+    wrapper.style.transform = `translateY(${translateY}px)`;
+    requestAnimationFrame(animate);
+  }
+  // Wait for layout, then start
+  setTimeout(startAnimation, 100);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Distribute tools among 3 columns as evenly as possible
-    const col1 = aiToolsData.filter((_, i) => i % 3 === 0);
-    const col2 = aiToolsData.filter((_, i) => i % 3 === 1);
-    const col3 = aiToolsData.filter((_, i) => i % 3 === 2);
-    setupVerticalCarousel('ai-tools-row-1', col1, 40); // px/sec
-    setupVerticalCarousel('ai-tools-row-2', col2, 25);
-    setupVerticalCarousel('ai-tools-row-3', col3, 60);
+  // Distribute tools among 3 columns as evenly as possible
+  const col1 = aiToolsData.filter((_, i) => i % 3 === 0);
+  const col2 = aiToolsData.filter((_, i) => i % 3 === 1);
+  const col3 = aiToolsData.filter((_, i) => i % 3 === 2);
+  setupVerticalCarousel('ai-tools-row-1', col1, 40); // px/sec
+  setupVerticalCarousel('ai-tools-row-2', col2, 25);
+  setupVerticalCarousel('ai-tools-row-3', col3, 60);
 });
 
 function redirectToAllTools() {
-    window.location.href = 'your-ai-tools-page.html';
+  window.location.href = 'your-ai-tools-page.html';
 }
 
 // Notification function
 function showNotification(message) {
   const notification = document.getElementById('notification');
   const notificationText = notification.querySelector('.notification-text');
-  
+
   if (notification && notificationText) {
     notificationText.textContent = message;
     notification.classList.add('show');
-    
+
     setTimeout(() => {
       notification.classList.remove('show');
     }, 3000);
@@ -1060,7 +1078,7 @@ function showNotification(message) {
 function enhanceAccessibility() {
   // Add keyboard navigation support
   document.body.classList.add('keyboard-navigation');
-  
+
   // Focus management for carousel
   const carouselCards = document.querySelectorAll('.gpt-card');
   carouselCards.forEach((card, index) => {
