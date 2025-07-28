@@ -200,6 +200,7 @@ function initializeModeToggle() {
       updateIcon(false);
     }
     localStorage.setItem('theme-mode', mode);
+    updateHeroBackground(); // <-- Add this line
   }
 
   // Initial mode
@@ -845,12 +846,19 @@ function initializeNewsSection() {
 }
 
 // --- HERO SECTION ANIMATED GRADIENT ---
+let heroGradientAnimationId = null;
+
 function initializeHeroGradientAnimation() {
   const hero = document.querySelector('.hero');
   const primaryButton = document.querySelector('.primary-button');
   if (!hero || !primaryButton) return;
 
-  const COLORS = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
+  // Choose color palettes and background based on mode
+  const isDark = document.body.classList.contains('dark');
+  const COLORS = isDark
+    ? ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"]
+    : ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"]; // Light mode palette
+
   let currentColorIndex = 0;
   let currentColor = hexToRgb(COLORS[0]);
   let targetColor = hexToRgb(COLORS[1]);
@@ -884,10 +892,15 @@ function initializeHeroGradientAnimation() {
       b: Math.round(currentColor.b),
     });
 
-    // Use a dark base for both modes, but you can tweak for light mode if needed
-    hero.style.background = `radial-gradient(125% 125% at 50% 0%, #020617 50%, ${newHex})`;
-    primaryButton.style.border = `1px solid ${newHex}`;
-    primaryButton.style.boxShadow = `0px 4px 24px ${newHex}`;
+    if (document.body.classList.contains('dark')) {
+      hero.style.background = `radial-gradient(125% 125% at 50% 0%, #020617 50%, ${newHex})`;
+      primaryButton.style.border = `1px solid ${newHex}`;
+      primaryButton.style.boxShadow = `0px 4px 24px ${newHex}`;
+    } else {
+      hero.style.background = `radial-gradient(125% 125% at 50% 0%, #f5f7fa 50%, ${newHex})`;
+      primaryButton.style.border = `1px solid ${newHex}`;
+      primaryButton.style.boxShadow = `0px 4px 24px ${newHex}`;
+    }
 
     const delta = Math.abs(currentColor.r - targetColor.r) +
       Math.abs(currentColor.g - targetColor.g) +
@@ -898,11 +911,28 @@ function initializeHeroGradientAnimation() {
       targetColor = hexToRgb(COLORS[currentColorIndex]);
     }
 
-    requestAnimationFrame(animateGradient);
+    heroGradientAnimationId = requestAnimationFrame(animateGradient);
+  }
+
+  // Cancel any previous animation
+  if (heroGradientAnimationId) {
+    cancelAnimationFrame(heroGradientAnimationId);
+    heroGradientAnimationId = null;
   }
 
   animateGradient();
 }
+
+function updateHeroBackground() {
+  // Always re-initialize animation/background on mode change
+  initializeHeroGradientAnimation();
+}
+
+// Call this after mode toggle and on page load
+document.addEventListener('DOMContentLoaded', function () {
+  updateHeroBackground();
+  // ...existing code...
+});
 
 // --- AI TOOLS (TESTIMONIALS) SECTION JS ---
 const aiToolsData = [
@@ -1096,4 +1126,3 @@ window.addEventListener('beforeunload', () => {
 });
 
 console.log('🎨 AI Portal loaded with light mode, starting animation, and carousel');
-
