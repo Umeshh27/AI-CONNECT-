@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Tools - AI Portal</title>
+    <!-- Link to the new dedicated CSS file -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts - Inter and Space Grotesk -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="light">
+    <!-- Header/Navigation - Reusing the existing header structure -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="icon-inner"></div>
+                    </div>
+                    <span class="logo-text">AI Portal</span>
+                </div>
+                <nav class="nav">
+                    <a href="index.html#home" class="nav-link">Home</a>
+                    <a href="index.html#news" class="nav-link">AI News</a>
+                    <a href="ai-tools.html" class="nav-link active">Tools</a>
+                    <a href="gemini-gems.html" class="nav-link">GEMS</a>
+                </nav>
+                <div class="mobile-nav" id="mobile-nav">
+                    <a href="index.html#home" class="nav-link">Home</a>
+                    <a href="index.html#news" class="nav-link">AI News</a>
+                    <a href="ai-tools.html" class="nav-link">Tools</a>
+                    <a href="gemini-gems.html" class="nav-link">GEMS</a>
+                </div>
+                <button class="mode-toggle" id="mode-toggle" aria-label="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content show">
+        <section class="ai-tools-hero-section">
+            <div class="section-container">
+                <h1 class="ai-tools-hero-title">Explore Our <span class="highlight">AI Tools</span> Collection</h1>
+                <p class="ai-tools-hero-description">
+                    Discover a vast array of cutting-edge artificial intelligence tools designed to enhance your productivity, creativity, and development.
+                </p>
+                <div class="search-filter-container">
+                    <div class="search-bar">
+                        <input type="text" id="tool-search" placeholder="Search AI tools..." class="search-input">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <div class="filter-buttons" id="filter-buttons">
+                        <!-- Filter buttons will be dynamically loaded here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="ai-tools-grid-section">
+            <div class="section-container">
+                <div class="ai-tools-grid" id="ai-tools-grid">
+                    <!-- AI Tool Cards will be dynamically loaded here by JavaScript -->
+                </div>
+                <div id="no-results-message" class="no-results-message" style="display: none;">
+                    No AI tools found matching your criteria. Try a different search or filter!
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer - Reusing the existing footer structure -->
+    <footer class="footer">
+        <div class="section-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="icon-inner"></div>
+                    </div>
+                    <span class="logo-text">AI Portal</span>
+                </div>
+                <p class="footer-description">
+                    Empowering the future through artificial intelligence.
+                    Discover, learn, and innovate with cutting-edge AI solutions.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4 class="footer-title">Platform</h4>
+                    <ul class="footer-list">
+                        <li><a href="index.html#news">AI News</a></li>
+                        <li><a href="ai-tools.html">Tools</a></li>
+                        <li><a href="gemini-gems.html">GEMS</a></li>
+                        <li><a href="index.html#news">News</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-list">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="copyright">© 2024 AI Portal. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <div class="scroll-progress" id="scroll-progress"></div>
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span class="notification-text">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- Link to the new dedicated JavaScript file -->
+    <script src="script.js"></script>
+</body>
+
+style
