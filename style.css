@@ -935,61 +935,6 @@ body.dark .stars-layer::before {
   margin-bottom: var(--space-xl);
 }
 
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-  color: var(--text-secondary);
-}
-
-.feature-item i {
-  color: var(--color-success);
-}
-
-.gem-actions {
-  display: flex;
-  gap: var(--space-md);
-}
-
-.gem-demo-btn,
-.gem-prompt-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-sm);
-  padding: var(--space-lg);
-  border-radius: var(--radius-lg);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-normal);
-}
-
-.gem-demo-btn {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  border: none;
-  color: var(--color-white);
-}
-
-.gem-demo-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
-}
-
-.gem-prompt-btn {
-  background: transparent;
-  border: 1px solid var(--color-gray-300);
-  color: var(--text-primary);
-}
-
-.gem-prompt-btn:hover {
-  border-color: var(--color-primary);
-  background: rgba(99, 102, 241, 0.1);
-  color: var(--color-primary);
-  transform: translateY(-2px);
-}
-
 /* AI News Section Styles */
 .ai-news-section {
   /* Enhanced background with gradient */
@@ -1250,7 +1195,7 @@ body.dark .news-feed-container:hover {
 }
 
 body.dark .animated-news-list {
-  background: linear-gradient(135deg, var(--color-gray-800), var(--bg-tertiary));
+  background: black;
   border-color: var(--color-gray-600);
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
 }
@@ -1375,9 +1320,10 @@ body.dark .animated-news-list {
 
 /* 1. News Section: Fix "Check All Trending Tools" button styling */
 .news-content-grid .check-all-container {
+  grid-column: 1 / -1;
   margin-top: 32px;
   margin-bottom: 0;
-  justify-content: flex-end;
+  justify-content: center;
   width: 100%;
   display: flex;
 }
@@ -2556,9 +2502,8 @@ body.dark .gpt-category-tag {
   }
 }
 
-/* ===== GEMS MARQUEE STYLING ===== */
+/* ===== GEMS MARQUEE STYLING (NO HOVER EFFECTS) ===== */
 
-/* Marquee Container */
 .site-footer-marquee {
   position: relative;
   overflow: hidden;
@@ -2567,74 +2512,46 @@ body.dark .gpt-category-tag {
   max-width: 100%;
 }
 
-/* Marquee Track */
 .site-footer-marquee__track {
   position: relative;
   overflow: hidden;
 }
 
-/* Marquee Grid */
 .site-footer-marquee__grid {
   display: flex;
   gap: 2rem;
   animation: marquee 30s linear infinite;
   will-change: transform;
   overflow: visible !important;
-  /* Remove or override any overflow:hidden on parent */
 }
 
-/* Marquee Animation */
 @keyframes marquee {
-  0% {
-    transform: translateX(0);
-   }
-
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* Pause animation on hover */
 .site-footer-marquee:hover .site-footer-marquee__grid {
   animation-play-state: paused;
 }
 
-/* Marquee Item */
 .site-footer-marquee-item {
   flex: 0 0 auto;
   width: 280px;
-  height: 320px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
   position: relative;
   border-radius: 1rem;
-  overflow: hidden;
   text-decoration: none;
   color: inherit;
-  transition:
-    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    z-index 0s;
+  transition: box-shadow 0.3s, border-color 0.3s;
   cursor: pointer;
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid var(--color-gray-200);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  z-index: 1;
-  position: relative;
-  will-change: transform;
+  z-index: 2;
 }
 
-.site-footer-marquee-item:hover {
-  z-index: 10;
-  /* Now the card will expand above others */
-}
-
-.site-footer-marquee-item:hover {
-  transform: scale(1.07);
-  box-shadow: 0 20px 40px rgba(107, 70, 193, 0.15);
-  border-color: var(--primary-purple);
-}
-
-/* Stack Effect */
 .site-footer-marquee-item__stack {
   position: absolute;
   top: 0;
@@ -2644,99 +2561,80 @@ body.dark .gpt-category-tag {
   background: linear-gradient(135deg, var(--stack-color-1, #EDDDFB) 0%, var(--stack-color-2, #DDFDE8) 100%);
   opacity: 0.1;
   transition: opacity 0.3s ease;
+  z-index: -2;
 }
-
-.site-footer-marquee-item:hover .site-footer-marquee-item__stack {
-  opacity: 0.2;
-}
-
-/* Media Container */
-.site-footer-marquee-item__media {
-  position: relative;
-  width: 100%;
-  height: 200px;
+.site-footer-marquee-item:hover{
+  transform: scale(1.1);
   overflow: hidden;
+}
+
+.site-footer-marquee-item__media {
+  width: 100%;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--color-gray-50);
-  border-radius: 0.75rem 0.75rem 0 0;
+  
 }
 
-.site-footer-marquee-item__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.site-footer-marquee-item:hover .site-footer-marquee-item__media img {
-  transform: scale(1.05);
-}
-
-/* Icon for AI Gems */
 .site-footer-marquee-item__icon {
   width: 80px;
   height: 80px;
-  background: var(--gradient-primary);
+  background: var(--dark-purple);
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2.5rem;
   color: white;
-  box-shadow: 0 8px 24px rgba(107, 70, 193, 0.3);
-  margin: 2rem auto 1rem;
+  /* box-shadow: 0 8px 24px rgba(107, 70, 193, 0.3); */
+  margin: 1.5rem 0;
 }
 
-/* Content Area */
 .site-footer-marquee-item__content {
-  padding: 1.5rem;
-  height: 120px;
+  padding: 0 1.5rem;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
 }
 
-/* Title */
 .site-footer-marquee-item__title {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-gray-900);
-  margin-bottom: 0.5rem;
   line-height: 1.3;
-  text-align: center;
 }
 
-/* Category */
 .site-footer-marquee-item__category {
   color: var(--primary-purple);
   font-weight: 600;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  text-align: center;
   margin-bottom: 0.5rem;
 }
 
-/* Description */
 .site-footer-marquee-item__description {
   color: var(--color-gray-600);
   font-size: 0.875rem;
-  line-height: 1.4;
-  text-align: center;
+  line-height: 1.5;
+  margin-top: 0.5rem;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  flex-grow: 1;
 }
 
-/* Footer */
 .site-footer-marquee-item__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem 1.5rem;
+  padding: 1rem 1.5rem 1.5rem;
+  flex-shrink: 0;
 }
 
 .site-footer-marquee-item__rating {
@@ -2754,7 +2652,6 @@ body.dark .gpt-category-tag {
   font-weight: 500;
 }
 
-/* Badge */
 .site-footer-marquee-item__badge {
   position: absolute;
   top: 1rem;
@@ -2770,45 +2667,17 @@ body.dark .gpt-category-tag {
   z-index: 2;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .site-footer-marquee-item {
     width: 240px;
-    height: 280px;
-  }
-
-  .site-footer-marquee-item__media {
-    height: 160px;
-  }
-
-  .site-footer-marquee-item__icon {
-    width: 60px;
-    height: 60px;
-    font-size: 2rem;
-    margin: 1.5rem auto 0.75rem;
-  }
-
-  .site-footer-marquee-item__title {
-    font-size: 1.125rem;
-  }
-
-  .site-footer-marquee-item__description {
-    font-size: 0.8rem;
-  }
-
-  .site-footer-marquee__grid {
-    gap: 1.5rem;
+    height: 360px;
   }
 }
 
 @media (max-width: 480px) {
   .site-footer-marquee-item {
     width: 200px;
-    height: 260px;
-  }
-
-  .site-footer-marquee-item__media {
-    height: 140px;
+    height: 340px;
   }
 
   .site-footer-marquee__grid {
@@ -2823,17 +2692,12 @@ body.dark .gpt-category-tag {
   color: var(--color-gray-100);
 }
 
-.dark .site-footer-marquee-item:hover {
-  border-color: var(--light-purple);
-  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
-}
-
 .dark .site-footer-marquee-item__title {
-  color: var(--color-gray-100);
+  color: black;
 }
 
 .dark .site-footer-marquee-item__description {
-  color: var(--color-gray-400);
+  color: var(--black);
 }
 
 .dark .site-footer-marquee-item__media {
@@ -2851,17 +2715,15 @@ body.dark .gpt-category-tag {
 }
 
 .site-footer-marquee-item {
+  border-radius: 0px;
   transform: translateZ(0);
 }
 
-/* Smooth scrolling for reduced motion users */
 @media (prefers-reduced-motion: reduce) {
   .site-footer-marquee__grid {
     animation: marquee 60s linear infinite;
   }
 }
-
-
 
 /* Additional mobile responsiveness for footer */
 @media (max-width: 480px) {
@@ -2949,27 +2811,4 @@ body.dark .gpt-category-tag {
     margin-top: 1rem;
     gap: 1rem;
   }
-}
-.site-footer-marquee-item__description {
-  color: #6b7280;
-  font-size: 1rem;
-  line-height: 1.6;
-  font-weight: 500;
-  background: rgba(139,92,246,0.07);
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  margin: 0.5rem 0 0 0;
-  min-height: 2.5em;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-align: center;
-  box-shadow: 0 2px 8px 0 rgba(139,92,246,0.04);
-  transition: background 0.2s, box-shadow 0.2s;
-}
-
-.site-footer-marquee-item:hover .site-footer-marquee-item__description {
-  background: rgba(139,92,246,0.13);
-  box-shadow: 0 4px 16px 0 rgba(139,92,246,0.08);
 }
