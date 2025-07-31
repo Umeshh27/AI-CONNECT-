@@ -1406,10 +1406,9 @@ body.dark .animated-news-list {
 }
 
 /* 2. Gems Section: Use overflow:hidden except in desktop mode */
-.carousel-wrapper {
-  /* Default: desktop mode, no overflow hidden */
+/* .carousel-wrapper {
   overflow: visible;
-}
+} */
 
 @media (max-width: 1024px) {
   .carousel-wrapper {
@@ -2162,9 +2161,9 @@ body.dark .gpt-category-tag {
   }
 
   /* Responsive Carousel: Hide overflow on small screens */
-  .carousel-wrapper {
+  /* .carousel-wrapper {
     overflow: hidden;
-  }
+  } */
 }
 
 @media (max-width: 600px) {
@@ -2191,7 +2190,9 @@ body.dark .gpt-category-tag {
 
   /* Responsive Carousel: Hide overflow on small screens */
   .carousel-wrapper {
-    overflow: hidden;
+    width: 100% !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
   }
 
   /* Enhanced responsive styles for news section on small screens */
@@ -2433,4 +2434,53 @@ body.dark .gpt-category-tag {
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+@media (max-width: 340px) {
+  .footer-content {
+    display: block !important;
+    padding: 0 4px !important;
+    margin-bottom: var(--space-lg);
+  }
+  .footer-brand {
+    max-width: 100% !important;
+    margin-bottom: var(--space-lg);
+  }
+  .footer-links {
+    display: block !important;
+    margin-bottom: var(--space-lg);
+  }
+  .footer-section {
+    margin-bottom: var(--space-md);
+  }
+  .footer-bottom {
+    flex-direction: column !important;
+    gap: 4px !important;
+    text-align: center !important;
+    padding-top: var(--space-md) !important;
+  }
+  .footer-bottom-links {
+    flex-direction: column !important;
+    gap: 2px !important;
+    align-items: center !important;
+  }
+  .footer-list a, .footer-title, .footer-description, .copyright {
+    font-size: 0.8rem !important;
+    word-break: break-word;
+  }
+  .social-links {
+    flex-wrap: wrap;
+    gap: 4px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr !important;
+    gap: var(--space-xl) !important;
+  }
+  .footer-links {
+    grid-template-columns: 1fr 1fr !important;
+    gap: var(--space-xl) !important;
+  }
 }
