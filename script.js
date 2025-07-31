@@ -1126,3 +1126,281 @@ window.addEventListener('beforeunload', () => {
 });
 
 console.log('🎨 AI Portal loaded with light mode, starting animation, and carousel');
+
+
+// ===== GEMS MARQUEE FUNCTIONALITY =====
+
+// Gems data for the marquee
+const gemsData = [
+  {
+    id: 1,
+    icon: '🤖',
+    title: 'AI Assistant Pro',
+    category: 'Productivity',
+    description: 'Advanced AI assistant for complex tasks, research, and creative projects with enhanced reasoning capabilities.',
+    rating: 4.9,
+    users: '50K+',
+    featured: true,
+    stackColor1: '#EDDDFB',
+    stackColor2: '#DDFDE8'
+  },
+  {
+    id: 2,
+    icon: '📊',
+    title: 'Data Analyst Expert',
+    category: 'Analytics',
+    description: 'Specialized in data analysis, visualization, and statistical insights for business intelligence.',
+    rating: 4.8,
+    users: '35K+',
+    featured: false,
+    stackColor1: '#F6D9FB',
+    stackColor2: '#E3EBFD'
+  },
+  {
+    id: 3,
+    icon: '✍️',
+    title: 'Content Creator',
+    category: 'Writing',
+    description: 'Professional content creation for blogs, social media, marketing materials, and creative writing.',
+    rating: 4.7,
+    users: '42K+',
+    featured: true,
+    stackColor1: '#EDF3D8',
+    stackColor2: '#EDDDFB'
+  },
+  {
+    id: 4,
+    icon: '💻',
+    title: 'Code Reviewer',
+    category: 'Development',
+    description: 'Expert code review, debugging assistance, and programming best practices across multiple languages.',
+    rating: 4.9,
+    users: '28K+',
+    featured: false,
+    stackColor1: '#DDFDE8',
+    stackColor2: '#EDF3D8'
+  },
+  {
+    id: 5,
+    icon: '🎨',
+    title: 'Design Consultant',
+    category: 'Design',
+    description: 'UI/UX design guidance, creative direction, and visual design recommendations for digital products.',
+    rating: 4.6,
+    users: '31K+',
+    featured: false,
+    stackColor1: '#E6FDC9',
+    stackColor2: '#EDF3D8'
+  },
+  {
+    id: 6,
+    icon: '📈',
+    title: 'Business Strategist',
+    category: 'Business',
+    description: 'Strategic business planning, market analysis, and growth optimization for startups and enterprises.',
+    rating: 4.8,
+    users: '25K+',
+    featured: true,
+    stackColor1: '#E6FBFE',
+    stackColor2: '#EDF3D8'
+  },
+  {
+    id: 7,
+    icon: '🔬',
+    title: 'Research Assistant',
+    category: 'Research',
+    description: 'Academic and scientific research support with literature review, methodology, and analysis.',
+    rating: 4.7,
+    users: '19K+',
+    featured: false,
+    stackColor1: '#E6FBFE',
+    stackColor2: '#DDFDE8'
+  },
+  {
+    id: 8,
+    icon: '🎯',
+    title: 'Marketing Expert',
+    category: 'Marketing',
+    description: 'Digital marketing strategies, campaign optimization, and brand development for modern businesses.',
+    rating: 4.8,
+    users: '38K+',
+    featured: true,
+    stackColor1: '#E3EBFD',
+    stackColor2: '#EDF3D8'
+  }
+];
+
+// Initialize gems marquee
+function initializeGemsMarquee() {
+  const marqueeGrid = document.getElementById('marquee-grid');
+  
+  if (!marqueeGrid) return;
+  
+  // Create marquee items with duplicates for seamless looping
+  createMarqueeItems(marqueeGrid);
+  
+  // Set up responsive behavior
+  setupMarqueeResponsiveness();
+}
+
+// Create marquee items
+function createMarqueeItems(container) {
+  container.innerHTML = '';
+  
+  // Create original items
+  gemsData.forEach(gem => {
+    const item = createMarqueeItem(gem);
+    container.appendChild(item);
+  });
+  
+  // Create duplicate items for seamless looping
+  gemsData.forEach(gem => {
+    const item = createMarqueeItem(gem, true);
+    container.appendChild(item);
+  });
+}
+
+// Create individual marquee item
+function createMarqueeItem(gem, isDuplicate = false) {
+  const item = document.createElement('div');
+  item.className = `site-footer-marquee-item${isDuplicate ? ' site-footer-marquee-item--duplicate' : ''}`;
+  item.style.setProperty('--stack-color-1', gem.stackColor1);
+  item.style.setProperty('--stack-color-2', gem.stackColor2);
+  
+  item.innerHTML = `
+    <div class="site-footer-marquee-item__stack"></div>
+    <div class="site-footer-marquee-item__media">
+      <div class="site-footer-marquee-item__icon">${gem.icon}</div>
+    </div>
+    <div class="site-footer-marquee-item__content">
+      <div class="site-footer-marquee-item__category">${gem.category}</div>
+      <div class="site-footer-marquee-item__title">${gem.title}</div>
+      <div class="site-footer-marquee-item__description">${gem.description}</div>
+    </div>
+    <div class="site-footer-marquee-item__footer">
+      <div class="site-footer-marquee-item__rating">
+        <i class="fas fa-star"></i>
+        <span>${gem.rating}</span>
+      </div>
+      <div class="site-footer-marquee-item__users">${gem.users} users</div>
+    </div>
+    ${gem.featured ? '<div class="site-footer-marquee-item__badge">Featured</div>' : ''}
+  `;
+  
+  // Add click handler
+  item.addEventListener('click', () => {
+    showNotification(`${gem.title} - Click to learn more about this AI assistant!`);
+  });
+  
+  return item;
+}
+
+// Setup responsive behavior
+function setupMarqueeResponsiveness() {
+  const marqueeContainer = document.querySelector('.site-footer-marquee');
+  const marqueeGrid = document.querySelector('.site-footer-marquee__grid');
+  
+  if (!marqueeContainer || !marqueeGrid) {
+    console.log('Marquee elements not found');
+    return;
+  }
+  
+  console.log('Setting up marquee responsiveness');
+  
+  // Adjust animation speed based on screen size
+  function adjustMarqueeSpeed() {
+    const screenWidth = window.innerWidth;
+    let animationDuration;
+    
+    if (screenWidth <= 480) {
+      animationDuration = '40s'; // Slower on mobile
+    } else if (screenWidth <= 768) {
+      animationDuration = '35s'; // Medium speed on tablet
+    } else {
+      animationDuration = '30s'; // Normal speed on desktop
+    }
+    
+    marqueeGrid.style.animationDuration = animationDuration;
+    console.log('Animation duration set to:', animationDuration);
+  }
+  
+  // Initial adjustment
+  adjustMarqueeSpeed();
+  
+  // Adjust on window resize
+  window.addEventListener('resize', adjustMarqueeSpeed);
+  
+  // Pause animation on hover for better UX - Apply to entire marquee container
+  marqueeContainer.addEventListener('mouseenter', (e) => {
+    console.log('Mouse entered marquee container');
+    marqueeGrid.style.animationPlayState = 'paused';
+  });
+  
+  marqueeContainer.addEventListener('mouseleave', (e) => {
+    console.log('Mouse left marquee container');
+    marqueeGrid.style.animationPlayState = 'running';
+  });
+  
+  // Also add hover listeners to individual cards for better control
+  const marqueeItems = marqueeContainer.querySelectorAll('.site-footer-marquee-item');
+  console.log('Found marquee items:', marqueeItems.length);
+  
+  marqueeItems.forEach((item, index) => {
+    item.addEventListener('mouseenter', (e) => {
+      console.log(`Mouse entered card ${index}`);
+      marqueeGrid.style.animationPlayState = 'paused';
+    });
+    
+    item.addEventListener('mouseleave', (e) => {
+      console.log(`Mouse left card ${index}`);
+      // Only resume if mouse is not over the container
+      setTimeout(() => {
+        if (!marqueeContainer.matches(':hover')) {
+          marqueeGrid.style.animationPlayState = 'running';
+        }
+      }, 50);
+    });
+  });
+  
+  // Handle reduced motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    marqueeGrid.style.animationDuration = '60s';
+  }
+  
+  console.log('Marquee responsiveness setup complete');
+}
+
+// Enhanced notification function for gems
+function showGemsNotification(message) {
+  const notification = document.getElementById('notification');
+  const notificationText = notification.querySelector('.notification-text');
+
+  if (notification && notificationText) {
+    notificationText.textContent = message;
+    notification.classList.add('show');
+
+    setTimeout(() => {
+      notification.classList.remove('show');
+    }, 4000);
+  }
+}
+
+// Initialize marquee when DOM is ready
+function initializeGemsMarqueeOnLoad() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeGemsMarquee);
+  } else {
+    initializeGemsMarquee();
+  }
+}
+
+// Call initialization
+initializeGemsMarqueeOnLoad();
+
+
+// Initialize gems marquee when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize gems marquee
+  initializeGemsMarquee();
+});
+
