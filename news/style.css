@@ -575,7 +575,7 @@ body {
 /* Section Common Styles */
 .section-header {
   text-align: center;
-  margin-bottom: var(--space-4xl);
+  margin-bottom: var(--space-2xl);
 }
 
 .section-badge {
